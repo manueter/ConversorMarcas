@@ -5,12 +5,14 @@ namespace ConversorMarcas.Modelo.Entidades
         string nombre;
         List<Parametro> parametros = new();
         int largoSeccion = 0;
+        int cantParametros = 0;
         Parametro mayorPosicion = null;
         public Seccion(string nombre) { Nombre = nombre; }
         public string Nombre { get => nombre; set => nombre = value; }
         public Parametro GetMayorPosicion() { return mayorPosicion; }
         public int GetLargoSeccion() { return largoSeccion; }
         public List<Parametro> GetParametros() { return parametros; }
+        public int GetCantParametros() { return cantParametros; }   
         public bool AgregarParametro(Parametro nuevo)
         {
             if (nuevo is null) return false;
@@ -26,6 +28,7 @@ namespace ConversorMarcas.Modelo.Entidades
                 }
             }
             parametros.Add(nuevo);
+            cantParametros++;
 
             if (mayorPosicion != null)
             {
@@ -45,6 +48,7 @@ namespace ConversorMarcas.Modelo.Entidades
                     largoSeccion -= pl.CantDigitos;
 
                     parametros.Remove(pl);
+                    cantParametros--;
                     if (mayorPosicion.Posicion == pl.Posicion)
                     { ReasignarMayorPosicion(); }   // Esto se corrige si se arma una lista ordenada de Parametros> ListaParametro.class
                     return true;

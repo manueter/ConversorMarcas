@@ -8,6 +8,7 @@ namespace ConversorMarcas.Modelo.Entidades
         Seccion body = new Seccion("Body");
         Seccion header = new Seccion("Header");
         bool tieneHeader;
+        
 
         public Formato(string nombre, string ext, Cliente cliente, bool tieneHeader)
         {
@@ -38,6 +39,7 @@ namespace ConversorMarcas.Modelo.Entidades
             paramOut = body.GetParametros();
             return paramOut;
         }
+        public int GetCantParametros() { return body.GetCantParametros() + header.GetCantParametros(); }
         public bool TieneParametroXNombre(Parametro buscado)
         {
             if (body.ParametroXNombre(buscado.Nombre) != null) return true;

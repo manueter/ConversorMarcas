@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.table_clientes = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btn_addCliente = new System.Windows.Forms.Button();
+            this.lbl_nombreCliente_ejemplo = new System.Windows.Forms.Label();
+            this.btn_eliminar_ejemplo = new System.Windows.Forms.Button();
+            this.lbl_idCliente_ejemplo = new System.Windows.Forms.Label();
+            this.btn_addCliente_ejemplo = new System.Windows.Forms.Button();
             this.table_clientes.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,80 +46,87 @@
             this.table_clientes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6.791173F));
             this.table_clientes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.8404F));
             this.table_clientes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.8996F));
-            this.table_clientes.Controls.Add(this.label1, 1, 0);
-            this.table_clientes.Controls.Add(this.button1, 2, 0);
-            this.table_clientes.Controls.Add(this.label2, 0, 0);
-            this.table_clientes.Controls.Add(this.btn_addCliente, 1, 1);
-            this.table_clientes.Location = new System.Drawing.Point(12, 12);
+            this.table_clientes.Controls.Add(this.lbl_nombreCliente_ejemplo, 1, 0);
+            this.table_clientes.Controls.Add(this.btn_eliminar_ejemplo, 2, 0);
+            this.table_clientes.Controls.Add(this.lbl_idCliente_ejemplo, 0, 0);
+            this.table_clientes.Controls.Add(this.btn_addCliente_ejemplo, 1, 1);
+            this.table_clientes.Location = new System.Drawing.Point(14, 14);
+            this.table_clientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.table_clientes.Name = "table_clientes";
             this.table_clientes.RowCount = 2;
             this.table_clientes.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.table_clientes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.table_clientes.Size = new System.Drawing.Size(283, 71);
+            this.table_clientes.Size = new System.Drawing.Size(323, 85);
             this.table_clientes.TabIndex = 0;
             // 
-            // label1
+            // lbl_nombreCliente_ejemplo
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbl_nombreCliente_ejemplo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 32);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre cliente";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_nombreCliente_ejemplo.AutoSize = true;
+            this.lbl_nombreCliente_ejemplo.Location = new System.Drawing.Point(31, 0);
+            this.lbl_nombreCliente_ejemplo.Name = "lbl_nombreCliente_ejemplo";
+            this.lbl_nombreCliente_ejemplo.Size = new System.Drawing.Size(184, 39);
+            this.lbl_nombreCliente_ejemplo.TabIndex = 0;
+            this.lbl_nombreCliente_ejemplo.Text = "Nombre cliente";
+            this.lbl_nombreCliente_ejemplo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // btn_eliminar_ejemplo
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btn_eliminar_ejemplo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.AutoSize = true;
-            this.button1.Location = new System.Drawing.Point(194, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 26);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Eliminar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_eliminar_ejemplo.AutoSize = true;
+            this.btn_eliminar_ejemplo.Location = new System.Drawing.Point(221, 4);
+            this.btn_eliminar_ejemplo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_eliminar_ejemplo.Name = "btn_eliminar_ejemplo";
+            this.btn_eliminar_ejemplo.Size = new System.Drawing.Size(99, 31);
+            this.btn_eliminar_ejemplo.TabIndex = 1;
+            this.btn_eliminar_ejemplo.Text = "Eliminar";
+            this.btn_eliminar_ejemplo.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // lbl_idCliente_ejemplo
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbl_idCliente_ejemplo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(18, 32);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "0";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_idCliente_ejemplo.AutoSize = true;
+            this.lbl_idCliente_ejemplo.Location = new System.Drawing.Point(3, 0);
+            this.lbl_idCliente_ejemplo.Name = "lbl_idCliente_ejemplo";
+            this.lbl_idCliente_ejemplo.Size = new System.Drawing.Size(22, 39);
+            this.lbl_idCliente_ejemplo.TabIndex = 3;
+            this.lbl_idCliente_ejemplo.Text = "0";
+            this.lbl_idCliente_ejemplo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btn_addCliente
+            // btn_addCliente_ejemplo
             // 
-            this.btn_addCliente.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btn_addCliente_ejemplo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_addCliente.AutoSize = true;
-            this.btn_addCliente.Location = new System.Drawing.Point(27, 35);
-            this.btn_addCliente.Name = "btn_addCliente";
-            this.btn_addCliente.Size = new System.Drawing.Size(161, 33);
-            this.btn_addCliente.TabIndex = 2;
-            this.btn_addCliente.Text = "Agregar Nuevo";
-            this.btn_addCliente.UseVisualStyleBackColor = true;
+            this.btn_addCliente_ejemplo.AutoSize = true;
+            this.btn_addCliente_ejemplo.Location = new System.Drawing.Point(31, 43);
+            this.btn_addCliente_ejemplo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btn_addCliente_ejemplo.Name = "btn_addCliente_ejemplo";
+            this.btn_addCliente_ejemplo.Size = new System.Drawing.Size(184, 38);
+            this.btn_addCliente_ejemplo.TabIndex = 2;
+            this.btn_addCliente_ejemplo.Text = "Agregar Nuevo";
+            this.btn_addCliente_ejemplo.UseVisualStyleBackColor = true;
             // 
             // ClientesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.BackColor = System.Drawing.Color.Orchid;
-            this.ClientSize = new System.Drawing.Size(307, 231);
+            this.BackColor = System.Drawing.Color.MediumOrchid;
+            this.ClientSize = new System.Drawing.Size(351, 277);
             this.Controls.Add(this.table_clientes);
+            this.Font = new System.Drawing.Font("Ubuntu Mono", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ForeColor = System.Drawing.Color.Navy;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ClientesForm";
-            this.Text = "ClientesForm";
+            this.Text = "Clientes";
             this.table_clientes.ResumeLayout(false);
             this.table_clientes.PerformLayout();
             this.ResumeLayout(false);
@@ -130,9 +137,9 @@
         #endregion
 
         private TableLayoutPanel table_clientes;
-        private Label label1;
-        private Button button1;
-        private Button btn_addCliente;
-        private Label label2;
+        private Label lbl_nombreCliente_ejemplo;
+        private Button btn_eliminar_ejemplo;
+        private Button btn_addCliente_ejemplo;
+        private Label lbl_idCliente_ejemplo;
     }
 }

@@ -16,6 +16,9 @@ namespace ConversorMarcas_Forms
     public partial class ClientesForm : Form
     {
         Sesion sesion;
+        List<Cliente> clientes_agregar = new();
+        List<Cliente> clientes_eliminar = new();
+
         public ClientesForm(Sesion sesion)
         {
             this.sesion = sesion;
@@ -77,20 +80,21 @@ namespace ConversorMarcas_Forms
                 { c = RepoClientes.GetInstancia().BuscarXNombre(btn_eliminarCliente.Name); }
                 
                 if (c != null) 
-                { RepoClientes.GetInstancia().Baja(c); CargarClientes(); }
+                {
+                    RepoClientes.GetInstancia().Baja(c);
+                    CargarClientes();
+                    //clientes_eliminar.Add(c);
+                }
                 
             }
         }
 
-        public void btn_eliminarCliente_Clicked(object sender, EventArgs e) 
-        { 
-        }
         public void crear_btnAgregarCliente(int row)
         {
             if (btnAgregarCliente != null) { btnAgregarCliente.Dispose(); }
             
             table_clientes.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            btnAgregarCliente = new Button() { Text = "Agregar nuevo", Name = "btn_addCliente2",BackColor=Color.White,TextAlign = ContentAlignment.MiddleCenter, AutoSize = true,AutoSizeMode = AutoSizeMode.GrowAndShrink };
+            btnAgregarCliente = new Button() { Text = "Agregar nuevo", Name = "btn_addCliente",BackColor=Color.White,TextAlign = ContentAlignment.MiddleCenter, AutoSize = true,AutoSizeMode = AutoSizeMode.GrowAndShrink };
             btnAgregarCliente.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
             btnAgregarCliente.Click += new EventHandler(btn_agregarCliente_Click);
             table_clientes.Controls.Add(btnAgregarCliente, 1, row);
@@ -104,7 +108,7 @@ namespace ConversorMarcas_Forms
             btnConfirmar.Click += new EventHandler(btn_confirmarCliente_Click);
             table_clientes.Controls.Add(btnConfirmar, 2, row);
 
-            this.DialogResult = DialogResult.OK;
+            ///this.DialogResult = DialogResult.OK;
         }
 
         public void btn_agregarCliente_Click(object sender, EventArgs e) 
@@ -117,14 +121,32 @@ namespace ConversorMarcas_Forms
             TextBox txtBoxNuevo = new TextBox() { TextAlign = HorizontalAlignment.Center };
             
             txtBoxNuevo.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+            //txtBoxNuevo.TextChanged
             table_clientes.Controls.Add(txtBoxNuevo, 1, table_clientes.RowCount - 2);
 
             crear_btnAgregarCliente(table_clientes.RowCount - 1);
             crear_btnConfirmar(table_clientes.RowCount - 1);
         }
-        public void btn_confirmarCliente_Click(object sender, EventArgs e) 
+        public void btn_confirmarCliente_Click(object sender, EventArgs e)
         {
-            this.Dispose(true);
+
+            foreach (Control control in table_clientes.Controls) 
+            {
+                if (control is TextBox) 
+                {
+                    if (control.Text.Trim() != "") 
+                    {
+                        Cliente nuevo = new Cliente(control.Text);
+                        clientes_agregar.Add(nuevo);
+                    }
+                }
+                
+            }
+            // Aplicar cambios. Pasar de lista local a la 'base de datos.' repositorio
+            foreach (Cliente c in clientes_agregar) { RepoClientes.GetInstancia().Alta(c); CargarClientes(); }
+           // foreach (Cliente c in clientes_eliminar) { RepoClientes.GetInstancia().Baja(c); CargarClientes(); }
+            DialogResult = DialogResult.OK;
         }
+
     }
 }

@@ -30,6 +30,14 @@ namespace ConversorMarcas.Modelo.Entidades
             if (formato == null) return false;
             return formatos.Remove(formato); 
         }
+        public Formato ObtenerFormatoXNombre(string nombre) 
+        {
+            foreach (Formato f in formatos)
+            {
+                if (nombre == f.Nombre) return f;
+            }
+            return null;
+        }
         public void VaciarFormatos()
         {
             formatos = new List<Formato>();

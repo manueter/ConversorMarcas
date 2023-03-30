@@ -71,6 +71,9 @@ namespace ConversorMarcas_Forms
             Cliente cliente = RepoClientes.GetInstancia().BuscarXNombre(cmb.Text);
             sesion.SetCliente(cliente);
             CargarFormatos();
+            btn_ir_Formatos.Enabled = true;
+            btn_ir_Formatos.ForeColor = SystemColors.ActiveCaption;
+
         }
         private void clientes_comboBox_DoubleClicked(object sender, EventArgs e) 
         {
@@ -230,28 +233,32 @@ namespace ConversorMarcas_Forms
                 panel_filtrosBuscar.Size = new Size(0, 0);
                 panel_filtrosBuscar.Visible = false;
 
-                tableLayoutPanel_main.Size -= new Size(0, 88);
-                tableLayoutPanel_main.RowCount--;
+                //tableLayoutPanel_main.Size -= new Size(0, 88);
+                
+                //tableLayoutPanel_main.RowCount--;
                 tableLayoutPanel_main.Controls.Remove(panel_filtrosBuscar);
             }
             else 
             {
                 buscarMarcas = true;
                 btn_ConvertirMarcas.Text = "Buscar Marcas";
-                tableLayoutPanel_main.Size += new Size(0, 88);
-                panel_filtrosBuscar.Size = new Size(465,100);
-                panel_filtrosBuscar.Visible = true;
-                panel_filtrosBuscar.Enabled = true;
+                //tableLayoutPanel_main.Size += new Size(0, 88);
+  
                 mostrarFiltrosParaBuscarMarcas();
             }
         }
 
         void mostrarFiltrosParaBuscarMarcas() 
         {
+            panel_filtrosBuscar.Size = new Size(465, 100);
+            panel_filtrosBuscar.Visible = true;
+            panel_filtrosBuscar.Enabled = true;
             panel_filtrosBuscar.Controls.Add(this.tableFiltros);
-            tableLayoutPanel_main.RowCount++;
-            tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 0, 3);
+            this.tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 1, 2);
             
+            //tableLayoutPanel_main.RowCount++;
+            //tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 0, 3);
+
         }
 
         private void txt_numeroTarjetaBuscado_TextChanged(object sender, EventArgs e)
@@ -269,6 +276,12 @@ namespace ConversorMarcas_Forms
                 comboBox_formatoIN.Items.Clear();
                 comboBox_formatoOUT.Items.Clear();
             }
+        }
+
+        private void btn_ir_Formatos_Click(object sender, EventArgs e)
+        {
+            FormatosForm formatosForm = new FormatosForm(sesion.GetCliente());
+            formatosForm.ShowDialog();
         }
     }
 }

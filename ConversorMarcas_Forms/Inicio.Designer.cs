@@ -101,7 +101,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.MediumPurple;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 473);
+            this.panel1.Location = new System.Drawing.Point(0, 354);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(954, 4);
             this.panel1.TabIndex = 9;
@@ -112,7 +112,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(4, 469);
+            this.panel2.Size = new System.Drawing.Size(4, 350);
             this.panel2.TabIndex = 10;
             // 
             // panel3
@@ -121,7 +121,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(950, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(4, 469);
+            this.panel3.Size = new System.Drawing.Size(4, 350);
             this.panel3.TabIndex = 11;
             // 
             // panel4
@@ -146,7 +146,7 @@
             this.panelEntrada.Controls.Add(this.lbl_formatoIN);
             this.panelEntrada.Controls.Add(this.comboBox_formatoIN);
             this.panelEntrada.Font = new System.Drawing.Font("Ubuntu Mono", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.panelEntrada.Location = new System.Drawing.Point(3, 88);
+            this.panelEntrada.Location = new System.Drawing.Point(3, 79);
             this.panelEntrada.Name = "panelEntrada";
             this.panelEntrada.Size = new System.Drawing.Size(465, 219);
             this.panelEntrada.TabIndex = 7;
@@ -246,7 +246,7 @@
             this.panel_salida.Controls.Add(this.txt_archivoOUT);
             this.panel_salida.Controls.Add(this.comboBox_formatoOUT);
             this.panel_salida.Controls.Add(this.lbl_formatoOUT);
-            this.panel_salida.Location = new System.Drawing.Point(474, 88);
+            this.panel_salida.Location = new System.Drawing.Point(474, 79);
             this.panel_salida.Name = "panel_salida";
             this.panel_salida.Size = new System.Drawing.Size(465, 219);
             this.panel_salida.TabIndex = 8;
@@ -359,6 +359,7 @@
             this.btn_ir_Formatos.TabIndex = 15;
             this.btn_ir_Formatos.Text = "Gestion Formatos";
             this.btn_ir_Formatos.UseVisualStyleBackColor = false;
+            this.btn_ir_Formatos.Click += new System.EventHandler(this.btn_ir_Formatos_Click);
             // 
             // tableLayoutPanel_main
             // 
@@ -366,9 +367,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel_main.AutoSize = true;
+            this.tableLayoutPanel_main.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel_main.ColumnCount = 2;
-            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel_main.Controls.Add(this.panel_salida, 1, 1);
             this.tableLayoutPanel_main.Controls.Add(this.btn_ConvertirMarcas, 1, 2);
             this.tableLayoutPanel_main.Controls.Add(this.panel5, 0, 0);
@@ -378,19 +380,21 @@
             this.tableLayoutPanel_main.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_main.Name = "tableLayoutPanel_main";
             this.tableLayoutPanel_main.RowCount = 3;
-            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 27.60943F));
-            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72.39057F));
-            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 373);
+            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 346);
             this.tableLayoutPanel_main.TabIndex = 16;
             // 
             // btn_ConvertirMarcas
             // 
+            this.btn_ConvertirMarcas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_ConvertirMarcas.AutoSize = true;
             this.btn_ConvertirMarcas.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btn_ConvertirMarcas.BackColor = System.Drawing.Color.Indigo;
             this.btn_ConvertirMarcas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btn_ConvertirMarcas.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_ConvertirMarcas.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btn_ConvertirMarcas.FlatAppearance.BorderSize = 10;
             this.btn_ConvertirMarcas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Red;
@@ -398,9 +402,9 @@
             this.btn_ConvertirMarcas.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_ConvertirMarcas.Font = new System.Drawing.Font("Ubuntu Mono", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_ConvertirMarcas.ForeColor = System.Drawing.Color.IndianRed;
-            this.btn_ConvertirMarcas.Location = new System.Drawing.Point(474, 313);
+            this.btn_ConvertirMarcas.Location = new System.Drawing.Point(474, 304);
             this.btn_ConvertirMarcas.Name = "btn_ConvertirMarcas";
-            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 53);
+            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 39);
             this.btn_ConvertirMarcas.TabIndex = 0;
             this.btn_ConvertirMarcas.Text = "Convertir Marcas";
             this.btn_ConvertirMarcas.UseVisualStyleBackColor = false;
@@ -418,20 +422,23 @@
             // 
             // panel_CheckBuscarMarcas
             // 
-            this.panel_CheckBuscarMarcas.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel_CheckBuscarMarcas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_CheckBuscarMarcas.AutoSize = true;
             this.panel_CheckBuscarMarcas.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel_CheckBuscarMarcas.BackColor = System.Drawing.Color.RoyalBlue;
             this.panel_CheckBuscarMarcas.Controls.Add(this.chkBox_BuscarMarcas);
-            this.panel_CheckBuscarMarcas.Location = new System.Drawing.Point(3, 313);
+            this.panel_CheckBuscarMarcas.Location = new System.Drawing.Point(3, 304);
             this.panel_CheckBuscarMarcas.Name = "panel_CheckBuscarMarcas";
-            this.panel_CheckBuscarMarcas.Size = new System.Drawing.Size(465, 53);
+            this.panel_CheckBuscarMarcas.Size = new System.Drawing.Size(465, 39);
             this.panel_CheckBuscarMarcas.TabIndex = 6;
             // 
             // chkBox_BuscarMarcas
             // 
             this.chkBox_BuscarMarcas.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chkBox_BuscarMarcas.Font = new System.Drawing.Font("Ubuntu Mono", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.chkBox_BuscarMarcas.Location = new System.Drawing.Point(15, 18);
+            this.chkBox_BuscarMarcas.Location = new System.Drawing.Point(15, 11);
             this.chkBox_BuscarMarcas.Name = "chkBox_BuscarMarcas";
             this.chkBox_BuscarMarcas.Size = new System.Drawing.Size(145, 24);
             this.chkBox_BuscarMarcas.TabIndex = 9;
@@ -596,8 +603,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Navy;
-            this.ClientSize = new System.Drawing.Size(954, 477);
+            this.ClientSize = new System.Drawing.Size(954, 358);
             this.Controls.Add(this.tableLayoutPanel_main);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
@@ -615,6 +623,7 @@
             this.panel_salida.ResumeLayout(false);
             this.panel_salida.PerformLayout();
             this.tableLayoutPanel_main.ResumeLayout(false);
+            this.tableLayoutPanel_main.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel_CheckBuscarMarcas.ResumeLayout(false);
             this.tableFiltros.ResumeLayout(false);
