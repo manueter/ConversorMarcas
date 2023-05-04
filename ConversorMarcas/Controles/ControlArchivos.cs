@@ -5,6 +5,7 @@ namespace ConversorMarcas.Controles
 {
     public static class ControlArchivos
     {
+        //static List<Archivo> archivos = new();
         public static string LeerDatosPrueba(string nombreArchivo, string rutaCarpeta)
         {
             DirectoryInfo dir = new DirectoryInfo(rutaCarpeta);
@@ -23,28 +24,10 @@ namespace ConversorMarcas.Controles
 
             return null;
         }
-        private static FileInfo ArchivoXNombreYRuta(string nombreArchivo, string rutaCarpeta)
+        private static IEnumerable<FileInfo> ArchivosEnCarpeta(DirectoryInfo dir)
         {
-            DirectoryInfo dir = new DirectoryInfo(rutaCarpeta);
-
-            if (dir.Exists)
-            {
-                IEnumerable<FileInfo> fileList = dir.GetFiles("*.*", SearchOption.AllDirectories);
-                foreach (FileInfo f in fileList)
-                {
-                    if (f.Name == nombreArchivo) return f;
-                }
-            }
-
-            return null;
-        }
-
-        // No se guardan los archivos, la idea es devolver la lineas.
-
-        private static IEnumerable<FileInfo> ListaArchivosEnCarpeta(string rutaCarpeta)
-        {
-            DirectoryInfo dir = new DirectoryInfo(rutaCarpeta);
-
+            //DirectoryInfo dir = new DirectoryInfo(rutaCarpeta);
+            
             if (dir.Exists)
             {
                 IEnumerable<FileInfo> fileList = dir.GetFiles("*.*", SearchOption.AllDirectories);
@@ -53,62 +36,47 @@ namespace ConversorMarcas.Controles
             return null;
         }
 
-        public static List<Linea> ObtenerLineas_UnArchivoXCarpeta(FileInfo archivo)
+        public static List<Marca> ObtenerMarcas(DirectoryInfo dir, Formato formato) 
         {
+            IEnumerable<FileInfo> fileList = ArchivosEnCarpeta(dir);
+            if (fileList == null) return null;
 
-            //FileInfo archivo = ArchivoXNombreYRuta(nombreArchivo, rutaCarpeta);
-            List<FileInfo> listaArchivos = new List<FileInfo>();
-            listaArchivos.Add(archivo);
-            /*
-            List<Linea> obtenidas = new List<Linea>();
-            Linea linea;
-            StreamReader sr = new StreamReader(archivo.FullName);
-            string lineastr = sr.ReadLine().Trim();
-            int numLinea = 0;
-            Formato formato = ControlFormatos.GetInstancia().GetFormatoXExtension(archivo.Extension);
-            while (lineastr != null)
+            List<Marca> marcas = new List<Marca>();
+
+            foreach (FileInfo file in fileList)
             {
-                // Hay que verificar que CADA LINEA cumpla el FORMATO que le corresponde.
-                if (formato.ValidarLinea(lineastr))
-                { numLinea++; linea = new Linea(numLinea, lineastr, formato, archivo.FullName); obtenidas.Add(linea); }
-                lineastr = sr.ReadLine();
+                marcas.AddRange(ObtenerMarcas(file, formato));
             }
-            sr.Close();
-            return obtenidas;
-            */
-            return ObtenerLineas_ListaArchivos(listaArchivos);
+            return marcas;
         }
-        //Metodo guarda las lineas en la lista global en ControlLineas
-        public static List<Linea> ObtenerLineas_VariosArchivosXCarpeta(string startFolder)
-        {
-            return ObtenerLineas_ListaArchivos(ListaArchivosEnCarpeta(startFolder));
-        }
-        private static List<Linea> ObtenerLineas_ListaArchivos(IEnumerable<FileInfo> listaArchivos)
+
+        public static List<Marca> ObtenerMarcas(FileInfo file,Formato formato)
         {
             StreamReader sr;
             string lineastr;
+            
+            List<Marca> marcasObtenidas = new List<Marca>();
             Linea linea;
-            List<Linea> obtenidas = new List<Linea>();
-            if (listaArchivos == null) return null;
-            foreach (FileInfo archivo in listaArchivos)
+
+            sr = new StreamReader(file.Name);
+            lineastr = sr.ReadLine().Trim();
+            int numLinea = 0;
+            while (lineastr != null)
             {
-                sr = new StreamReader(archivo.FullName);
-                lineastr = sr.ReadLine().Trim();
-                int numLinea = 0;
-                Formato formato = RepoFormatos.GetInstancia().GetFormatoXExtension(archivo.Extension);
-                while (lineastr != null)
-                {
-                    //Hay que validar la linea
-                    numLinea++;
-                    linea = new Linea(numLinea, lineastr, formato, archivo.FullName);
-                    obtenidas.Add(linea);
-                    lineastr = sr.ReadLine();
-                }
-                sr.Close();
+                //Hay que validar la linea
+                numLinea++;
+                linea = new Linea(numLinea, lineastr, formato, file.FullName);
+
+                marcasObtenidas.AddRange(linea.ObtenerMarcas());
+
+                lineastr = sr.ReadLine();
             }
-            return obtenidas;
+            sr.Close();
+            
+            return marcasObtenidas;
         }
-        public static void GenerarArchivoDeSalida(string outFolder, string nombre, string extension, string datosString)
+        
+        public static FileInfo GenerarArchivoDeSalida(string outFolder, string nombre, string extension, string datosString)
         {
             if (extension != null)
             {
@@ -123,24 +91,30 @@ namespace ConversorMarcas.Controles
                     string salida = outFolder + "\\" + nombre;
                     StreamWriter sw = new StreamWriter(salida);
                     sw.WriteLine(datosString);
+                    FileInfo fi = new FileInfo(salida);
                     sw.Close();
                     sw.Dispose();
+                    return fi;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Exception: " + e.Message);
+                    // Console.WriteLine("Exception: " + e.Message);
+                    
                 }
                 finally { }
+                
             }
+            return null;
         }
-        private static void UnificarArchivos(string startFolder, string outFolder, string nombre, string extension)
+        private static FileInfo UnificarArchivos(string startFolder, string outFolder, string nombre, string extension)
         {
-            IEnumerable<FileInfo> listaArchivos = ListaArchivosEnCarpeta(startFolder);
+            DirectoryInfo dir = new DirectoryInfo(startFolder);
+            IEnumerable<FileInfo> archivos = ArchivosEnCarpeta(dir);
             StreamReader sr;
             string lineasalida = "";
-            if (listaArchivos != null)
+            if (archivos != null)
             {
-                foreach (FileInfo archivo in listaArchivos)
+                foreach (FileInfo archivo in archivos)
                 {
                     sr = new StreamReader(archivo.FullName);
                     string lineastr = sr.ReadLine().Trim();
@@ -163,7 +137,7 @@ namespace ConversorMarcas.Controles
             {
                 extension = "." + extension;
             }
-            GenerarArchivoDeSalida(outFolder, nombre, extension, lineasalida);
+            return GenerarArchivoDeSalida(outFolder, nombre, extension, lineasalida);
         }
     }
 

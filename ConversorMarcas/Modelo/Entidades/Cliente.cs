@@ -10,8 +10,10 @@ namespace ConversorMarcas.Modelo.Entidades
     {
         string nombre;
         List<Formato> formatos = new List<Formato> ();
+        List<Marca> marcas = new List<Marca> ();
         public string Nombre { get => nombre; set => nombre = value; }
         public List<Formato> GetFormatos(){ return this.formatos;}
+        public List<Marca> Marcas { get => this.marcas; }  
         public Cliente(string nombre)
         {
             Nombre = nombre;
@@ -37,6 +39,12 @@ namespace ConversorMarcas.Modelo.Entidades
                 if (nombre == f.Nombre) return f;
             }
             return null;
+        }
+
+        public bool AgregarMarcas(List<Marca> marcasNuevas) 
+        {
+            if (marcasNuevas == null) return false;
+            marcas.AddRange(marcasNuevas); return true;
         }
         public void VaciarFormatos()
         {

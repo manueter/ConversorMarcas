@@ -4,11 +4,13 @@ namespace ConversorMarcas.Controles
 {
     public class ControlLineas
     {
-        private static ControlLineas instancia = new ControlLineas();
-        private List<Linea> lineas = new List<Linea>();
-        public static ControlLineas GetInstancia() { return instancia; }
+
+        // Pasar de singleton a mantenter un listado de lineas.
+
+        //private static ControlLineas instancia = new ControlLineas();
+        private static List<Linea> lineas = new List<Linea>();
         private ControlLineas() { }
-        public List<Marca> ObtenerMarcas()
+        public static List<Marca> ObtenerMarcas()
         {
             List<Marca> marcasObtenidas = new List<Marca>();
             if (lineas != null)
@@ -21,8 +23,27 @@ namespace ConversorMarcas.Controles
             }
             return null;
         }
+        public static List<Marca> MarcasXFuncionario(int numFuncionario) 
+        {
+            List<Marca> marcasObtenidas = ObtenerMarcas();
+            List<Marca> marcasFiltradas = ObtenerMarcas();
+            if (marcasObtenidas.Count> 0)
+            {
+                foreach (Marca marca in marcasObtenidas)
+                {
+
+                    /*
+                    if (marca.Funcionario.getNumero() == numFuncionario) 
+                    {
+                        marcasFiltradas.Add(marca);
+                    }*/
+                }
+                return marcasFiltradas;
+            }
+            return null;
+        }
         public List<Linea> GetLineas() { return lineas; }
-        public bool AgregarLineas(List<Linea> nuevas)
+        public static bool AgregarLineas(List<Linea> nuevas)
         {
             if (nuevas == null) return false;
 
@@ -38,7 +59,7 @@ namespace ConversorMarcas.Controles
             //if()
             return true;
         }
-        public string LineasString()
+        public static string LineasToString(List<Linea> lineas)
         {
             string strout = "";
             if (lineas == null) return strout;
@@ -49,7 +70,7 @@ namespace ConversorMarcas.Controles
             }
             return strout;
         }
-        public bool ResetearLineas()
+        public static bool ResetearLineas()
         {
             lineas = new List<Linea>();
             return true;

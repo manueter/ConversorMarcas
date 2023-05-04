@@ -11,56 +11,52 @@ namespace ConversorMarcas.Procesos
         {
             this.sesion = sesion;
         }
-        public string LeerDatosPrueba(string nombreArchivo, string rutaCarpeta) { return ControlArchivos.LeerDatosPrueba(nombreArchivo, rutaCarpeta); }
 
-        private string ObtenerExtensionDeNombreArchivo(string nombreArchivo) 
-        {
-            int largonombre = nombreArchivo.Length;
-            while (largonombre >= 0) 
-            {
-                if (nombreArchivo.Substring(largonombre - 1).StartsWith(".")) return nombreArchivo.Substring(largonombre - 1);
-                largonombre--;
-            }
-            return "";
-        }
-        public string TransformarMarcas_UnArchivo(FileInfo fileIn, string nombreArchivoOut, string folderOut)
+        public string TransformarMarcas_UnArchivo(FileInfo fileIn, string nameFileOut, string folderOut, Formato formatoIn,Formato formatoOut)
         {
             //validar nombre archivo. 
-            //validar nombre y ruta carpeta
-            List<Linea> lineas = ControlArchivos.ObtenerLineas_UnArchivoXCarpeta(fileIn);
-            return TransformarMarcas(lineas,nombreArchivoOut,folderOut);
+            //validar nombre y ruta carpeta           
+            List<Marca> marcas = ControlArchivos.ObtenerMarcas(fileIn,formatoIn);
+
+            // Si quisiera guardar las marcas en el cliente:
+            //sesion.GetCliente().AgregarMarcas(marcas);
+            RepoMarcas.GetInstancia().Alta(marcas);
+
+
+            return TransformarMarcas(marcas, nameFileOut, folderOut, formatoOut);
         }
-        public string TransformarMarcas_VariosArchivos(string folderIn, string nombreArchivoOut, string folderOut) 
+        public string TransformarMarcas_VariosArchivos(string folderIn, string nameFileOut, string folderOut, Formato formatoIn, Formato formatoOut) 
         {
-            List<Linea> lineas = ControlArchivos.ObtenerLineas_VariosArchivosXCarpeta(folderIn);
-            return TransformarMarcas(lineas, nombreArchivoOut, folderOut);
+            DirectoryInfo dir = new DirectoryInfo(folderIn);
+            List<Marca> marcas = ControlArchivos.ObtenerMarcas(dir,formatoIn);
+            return TransformarMarcas(marcas, nameFileOut, folderOut, formatoOut);
         }
-        string TransformarMarcas(List<Linea> lineasATransformar, string nombreArchivoOut, string folderOut) 
+
+        
+        private string TransformarMarcas(List<Marca> marcasATransformar, string nameFileOut, string folderOut, Formato formatoOut) 
         {
-            
-            if (lineasATransformar == null) { return "No hay lineas para convertir"; }
-            if (lineasATransformar.Count == 0) { return "No hay lineas para convertir"; }
-            if (!ControlLineas.GetInstancia().AgregarLineas(lineasATransformar)) return "Hubo un error al guardar las lineas iniciales."; ;
-
-            List<Marca> marcas = ControlLineas.GetInstancia().ObtenerMarcas();
-            if (marcas == null) return "No se obtuvieron marcas";
-            if (marcas.Count == 0) return "No se obtuvieron marcas";
-
-            if (!RepoMarcas.GetInstancia().Alta(marcas)) return "No se pudieron guardar las marcas";
-
-            string extensionSalida = ObtenerExtensionDeNombreArchivo(nombreArchivoOut);
-            Formato formatoSalida = RepoFormatos.GetInstancia().GetFormatoXExtension(extensionSalida);
-            if (formatoSalida == null) { return "No se obtuvo un formato de salida correcto"; }
-            lineasATransformar = RepoMarcas.GetInstancia().GetLineasXFormato(formatoSalida);
-            if (lineasATransformar == null) { return "No se pudieron convertir las marcas al formato solicitado."; }
-            if (lineasATransformar.Count == 0) { return "No se convirtio ninguna marca."; }
-            if (!ControlLineas.GetInstancia().ResetearLineas()) return "No se pudo hacer sobreescribir la informacion.";
-            if (!ControlLineas.GetInstancia().AgregarLineas(lineasATransformar)) return "Hubo un error al guardar las lineas con las marcas convertidas.";
-
-            string stringSalida = ControlLineas.GetInstancia().LineasString();
+            List<Linea> lineasTransformadas = RepoMarcas.GetInstancia().GetLineasXFormato(marcasATransformar,formatoOut);
+            if (lineasTransformadas == null) { return "No se pudieron convertir las marcas al formato solicitado."; }
+            if (lineasTransformadas.Count == 0) { return "No se convirtio ninguna marca."; }
+            string stringSalida = ControlLineas.LineasToString(lineasTransformadas);
             if (stringSalida == null) { return "Se obtuvo una salida vacia."; }
-            ControlArchivos.GenerarArchivoDeSalida(folderOut, nombreArchivoOut, formatoSalida.GetExtension(), stringSalida);
+            ControlArchivos.GenerarArchivoDeSalida(folderOut, nameFileOut, formatoOut.GetExtension(), stringSalida);
             return "OK";
+        }
+
+        public string BuscarMarcas
+            (FileInfo fileIn, string nameFileOut, string folderOut, Formato formatoIn, Formato formatoOut, bool filtrarNroFunc, int numFuncionario, bool filtrarDateIni, DateTime dateIni, bool filtrarDateFin, DateTime dateFin)
+        {
+            return "No implementado";
+        }
+        public string BuscarMarcasXFuncionario(int numFuncionario, FileInfo fileIn, string nameFileOut, string folderOut, Formato formatoIn, Formato formatoOut)
+        {       
+            List<Marca> marcas = ControlArchivos.ObtenerMarcas(fileIn, formatoIn);
+            //sesion.GetCliente().AgregarMarcas(marcas);
+            RepoMarcas.GetInstancia().Alta(marcas);
+            List<Marca> marcasXFuncionario = RepoMarcas.GetInstancia().GetMarcasXFuncionario(numFuncionario);
+
+            return TransformarMarcas(marcasXFuncionario, nameFileOut, folderOut, formatoOut);
         }
     }
 }

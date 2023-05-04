@@ -4,11 +4,13 @@ namespace ConversorMarcas.Modelo.Entidades
     {
         int id;
         static int ultId = 0;
+        Linea lineaOrigen;
         Seccion seccionMarca = new Seccion("Body");
         public int Id { get => id; set => id = value; }
 
-        public Marca()
+        public Marca(Linea linea)
         {
+            lineaOrigen = linea;
             Id = ++ultId;
         }
         public Marca(string reloj, string fecha, char tipo, string hora, string nroTarjeta)
@@ -25,20 +27,21 @@ namespace ConversorMarcas.Modelo.Entidades
 
         //private int ultPos;
         public Seccion GetSeccion() => seccionMarca;
+        public Linea GetLineaOrigen() => lineaOrigen;
         public void ParametrosBase()
         {
-            seccionMarca.AgregarParametro(new Parametro("reloj"));
-            seccionMarca.AgregarParametro(new Parametro("fecha"));
-            seccionMarca.AgregarParametro(new Parametro("hora"));
-            seccionMarca.AgregarParametro(new Parametro("tipo"));
-            seccionMarca.AgregarParametro(new Parametro("nroTarjeta"));
+            seccionMarca.AgregarParametroVacio("reloj");
+            seccionMarca.AgregarParametroVacio("fecha");
+            seccionMarca.AgregarParametroVacio("hora");
+            seccionMarca.AgregarParametroVacio("tipo");
+            seccionMarca.AgregarParametroVacio("nroTarjeta");
         }
 
         public bool AgregarParametros(List<Parametro> parametrosNuevos)
         {
             foreach (Parametro nuevo in parametrosNuevos)
             {
-                if (!seccionMarca.AgregarParametro(nuevo)) return false;
+               // if (!seccionMarca.AgregarParametros(nuevo)) return false;
             }
             return true;
         }

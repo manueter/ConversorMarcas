@@ -8,8 +8,6 @@ namespace ConversorMarcas.Modelo.Entidades
         Seccion body = new Seccion("Body");
         Seccion header = new Seccion("Header");
         bool tieneHeader;
-        
-
         public Formato(string nombre, string ext, Cliente cliente, bool tieneHeader)
         {
             Nombre = nombre;
@@ -49,7 +47,6 @@ namespace ConversorMarcas.Modelo.Entidades
                 return false;
             }
         }
-        
         public bool Validar()
         {
             if(nombre.Trim()=="") return false;

@@ -21,12 +21,19 @@ namespace ConversorMarcas_Forms
         string nombreArchivoIn;
         string folderIN;
         string folderOUT;
+
+        Formato formatoIn;
+        Formato formatoOut;
         // Si es true, se prepara para buscar un solo archivo, 
         // Si es false, busca varios archuvos en una carpeta.
-        bool unSoloArchivo=true;
+        bool unSoloArchivo = true;
 
         // Si es true, se prepara para buscar marcas en archivos en vez de convertir
-        bool buscarMarcas=false;
+        bool buscarMarcas = false;
+
+        int filtro_nroFunc=0;
+        DateTime filtro_fechaIni;
+        DateTime filtro_fechaFin;
 
         public Inicio(Sesion sesion)
         {
@@ -35,15 +42,15 @@ namespace ConversorMarcas_Forms
             CargarClientes();
             panel_filtrosBuscar.Enabled = false;
             panel_filtrosBuscar.Visible = false;
-            chkBox_BuscarMarcas.Enabled = true;    
-            
+            chkBox_BuscarMarcas.Enabled = true;
+
 
             SendMessage(this.clientes_comboBox.Handle, CB_SETCUEBANNER, 0, "Elegir cliente...");
             //lbl_tituloPrograma.Select();
 
         }
         public void CargarClientes()
-        {             
+        {
             List<Cliente> clientes = RepoClientes.GetInstancia().GetClientes;
             clientes_comboBox.Items.Clear();
             //clientes_comboBox.Items.Insert(0, "Elegir cliente...");
@@ -53,13 +60,15 @@ namespace ConversorMarcas_Forms
             }
         }
 
-        void CargarFormatos() 
+        void CargarFormatos()
         {
+
             List<Formato> formatos = sesion.GetCliente().GetFormatos();
             comboBox_formatoIN.Items.Clear();
             comboBox_formatoOUT.Items.Clear();
             foreach (Formato f in formatos)
             {
+                RepoFormatos.GetInstancia().Alta(f);
                 comboBox_formatoIN.Items.Add(f.Nombre);
                 comboBox_formatoOUT.Items.Add(f.Nombre);
             }
@@ -73,21 +82,31 @@ namespace ConversorMarcas_Forms
             CargarFormatos();
             btn_ir_Formatos.Enabled = true;
             btn_ir_Formatos.ForeColor = SystemColors.ActiveCaption;
-
         }
-        private void clientes_comboBox_DoubleClicked(object sender, EventArgs e) 
+        private void clientes_comboBox_DoubleClicked(object sender, EventArgs e)
         {
             clientes_comboBox.Visible = false;
         }
         private void btn_selectCliente_Click(object sender, EventArgs e)
         {
-            clientes_comboBox.Visible =true;
+            clientes_comboBox.Visible = true;
             List<Formato> formatosCliente = sesion.GetCliente().GetFormatos();
-
         }
+
+        private void formatoIN_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            formatoIn = RepoFormatos.GetInstancia().BuscarXNombre(cmb.Text);
+        }
+        private void formatoOUT_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            formatoIn = RepoFormatos.GetInstancia().BuscarXNombre(cmb.Text);
+        }
+
         private void txt_ArchivoIN_Clicked(object sender, EventArgs e)
         {
-            if (txt_archivoIN.Text == "") 
+            if (txt_archivoIN.Text == "")
             {
                 txt_ArchivoIN_DoubleClicked(sender, e);
             }
@@ -99,7 +118,7 @@ namespace ConversorMarcas_Forms
             //openFileDialog_entrada.SelectedPath = selectPath_origenXDefecto;
             if (openFileDialog_IN.ShowDialog() == DialogResult.OK)
             {
-                txt_archivoIN_TextChanged(sender,e);
+                txt_archivoIN_TextChanged(sender, e);
             }
         }
         private void txt_archivoIN_TextChanged(object sender, EventArgs e)
@@ -107,13 +126,12 @@ namespace ConversorMarcas_Forms
             txt_archivoIN.Text = openFileDialog_IN.FileName;
             nombreArchivoIn = txt_archivoIN.Text;
         }
-        private void txt_folderIN_Clicked(object sender, EventArgs e) 
+        private void txt_folderIN_Clicked(object sender, EventArgs e)
         {
-            if (txt_folderIN.Text=="")
+            if (txt_folderIN.Text == "")
             {
-                txt_folderIN_DoubleClicked(sender,e);
+                txt_folderIN_DoubleClicked(sender, e);
             }
-            
         }
         private void txt_folderIN_DoubleClicked(object sender, EventArgs e)
         {
@@ -151,10 +169,10 @@ namespace ConversorMarcas_Forms
         }
         private void btn_ConvertirMarcas_Click(object sender, EventArgs e)
         {
-            string msgOut="";
+            string msgOut = "";
             MessageBox messageBox;
             btn_ConvertirMarcas.ForeColor = Color.Yellow;
-            if (sesion != null) 
+            if (sesion != null)
             {
                 if (sesion.GetCliente() != null)
                 {
@@ -166,31 +184,49 @@ namespace ConversorMarcas_Forms
                         if (unSoloArchivo && nombreArchivoIn != null)
                         {
                             FileInfo fileIN = new FileInfo(nombreArchivoIn);
-                            msgOut = procesos.TransformarMarcas_UnArchivo(fileIN, nombreArchivoOut, folderOUT);
+                            if (!buscarMarcas)
+                            {
+                                msgOut = procesos.TransformarMarcas_UnArchivo(fileIN, nombreArchivoOut, folderOUT, formatoIn, formatoOut);
+                            }
+                            else
+                            {
+                                
+                                bool filtraDateFin=this.chkBox_filtroDateFin.Checked;
+                                bool filtraDateIni = this.chkBox_filtroDateIni.Checked;
+                                bool filtraNroFunc = this.chkBox_filtroNroTarjeta.Checked;
+
+                                msgOut = procesos.BuscarMarcas
+                                    (fileIN, nombreArchivoOut, folderOUT, formatoIn, formatoOut, filtraNroFunc, filtro_nroFunc, filtraDateIni, filtro_fechaIni, filtraDateFin, filtro_fechaFin);
+                            }
                         }
                         else
                         {
-                            msgOut = procesos.TransformarMarcas_VariosArchivos(folderIN, nombreArchivoOut, folderOUT);
+                            if (!buscarMarcas)
+                            {
+                                msgOut = procesos.TransformarMarcas_VariosArchivos(folderIN, nombreArchivoOut, folderOUT, formatoIn, formatoOut);
+                            }
+
                         }
+
                         if (msgOut != null)
                         {
                             if (msgOut != "OK")
                             {
                                 messageBox = new MessageBox("ERROR", msgOut);
                             }
-                            else 
+                            else
                             {
                                 messageBox = new MessageBox("EXITO", "Se convirtieron las marcas.");
-                                
+
                             }
                             messageBox.ShowDialog();
                         }
                     }
                     else
                     {
-                        if (folderIN == null || folderIN== "") { msgOut += "Seleccionar carpeta inicial. \n"; }
-                        if (folderOUT == "" || folderOUT==null) { msgOut += "Seleccionar carpeta de salida. \n"; }
-                        if (nombreArchivoOut == ""|| nombreArchivoOut == null) { msgOut += "Seleccionar archivo salida. \n"; }
+                        if (folderIN == null || folderIN == "") { msgOut += "Seleccionar carpeta inicial. \n"; }
+                        if (folderOUT == "" || folderOUT == null) { msgOut += "Seleccionar carpeta de salida. \n"; }
+                        if (nombreArchivoOut == "" || nombreArchivoOut == null) { msgOut += "Seleccionar archivo salida. \n"; }
                         messageBox = new MessageBox("ERROR", msgOut);
                         messageBox.ShowDialog();
                     }
@@ -202,7 +238,7 @@ namespace ConversorMarcas_Forms
                     messageBox.ShowDialog();
                 }
             }
-            
+
             btn_ConvertirMarcas.ForeColor = Color.White;
         }
 
@@ -228,42 +264,59 @@ namespace ConversorMarcas_Forms
         {
             if (buscarMarcas)
             {
-                buscarMarcas = false;
-                btn_ConvertirMarcas.Text = "Convertir Marcas";
-                panel_filtrosBuscar.Size = new Size(0, 0);
-                panel_filtrosBuscar.Visible = false;
-
-                //tableLayoutPanel_main.Size -= new Size(0, 88);
-                
-                //tableLayoutPanel_main.RowCount--;
-                tableLayoutPanel_main.Controls.Remove(panel_filtrosBuscar);
+                //buscarMarcas = false;
+                btn_ConvertirMarcas.Text = "Convertir Marcas";;
+                ocultarFiltrosParaBuscarMarcas();
             }
-            else 
+            else
             {
-                buscarMarcas = true;
+                //buscarMarcas = true;  
                 btn_ConvertirMarcas.Text = "Buscar Marcas";
-                //tableLayoutPanel_main.Size += new Size(0, 88);
-  
                 mostrarFiltrosParaBuscarMarcas();
             }
+            buscarMarcas = !buscarMarcas;
         }
 
-        void mostrarFiltrosParaBuscarMarcas() 
+        void mostrarFiltrosParaBuscarMarcas()
         {
             panel_filtrosBuscar.Size = new Size(465, 100);
             panel_filtrosBuscar.Visible = true;
             panel_filtrosBuscar.Enabled = true;
             panel_filtrosBuscar.Controls.Add(this.tableFiltros);
             this.tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 1, 2);
-            
-            //tableLayoutPanel_main.RowCount++;
-            //tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 0, 3);
-
         }
-
-        private void txt_numeroTarjetaBuscado_TextChanged(object sender, EventArgs e)
+        void ocultarFiltrosParaBuscarMarcas()
         {
-
+            panel_filtrosBuscar.Size = new Size(0, 0);
+            panel_filtrosBuscar.Visible = false;
+            tableLayoutPanel_main.Controls.Remove(panel_filtrosBuscar);
+        }
+        private void filtro_NroTarjeta_Changed(object sender, EventArgs e)
+        {
+            if (chkBox_filtroNroTarjeta.Checked)
+            {
+                TextBox textBox = (TextBox)sender;
+                if (Int32.TryParse(textBox.Text, out int r)) 
+                {
+                    filtro_nroFunc = r;
+                }
+            }
+        }
+        private void filtro_DateInicial_Changed(object sender, EventArgs e)
+        {
+            if (chkBox_filtroDateIni.Checked) 
+            {
+                DateTimePicker dateTime = (DateTimePicker)sender;
+                filtro_fechaIni = dateTime.Value;
+            }
+        }
+        private void filtro_DateFinal_Changed(object sender, EventArgs e)
+        {
+            if (chkBox_filtroDateFin.Checked)
+            {
+                DateTimePicker dateTime = (DateTimePicker)sender;
+                filtro_fechaFin = dateTime.Value;
+            }
         }
 
         private void btn_ir_Clientes_Click(object sender, EventArgs e)

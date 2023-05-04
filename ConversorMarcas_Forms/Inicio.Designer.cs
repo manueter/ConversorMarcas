@@ -64,20 +64,21 @@
             this.chkBox_BuscarMarcas = new System.Windows.Forms.CheckBox();
             this.panel_filtrosBuscar = new System.Windows.Forms.Panel();
             this.tableFiltros = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.chkBox_filtroDateFin = new System.Windows.Forms.CheckBox();
+            this.chkBox_filtroNroTarjeta = new System.Windows.Forms.CheckBox();
+            this.chkBox_filtroDateIni = new System.Windows.Forms.CheckBox();
+            this.lbl_FechaFin = new System.Windows.Forms.Label();
+            this.lbl_FechaIni = new System.Windows.Forms.Label();
+            this.txtBox_nroTarjeta = new System.Windows.Forms.TextBox();
+            this.lbl_NroTarjeta = new System.Windows.Forms.Label();
+            this.dateTime_ini = new System.Windows.Forms.DateTimePicker();
+            this.dateTime_fin = new System.Windows.Forms.DateTimePicker();
             this.panelEntrada.SuspendLayout();
             this.panel_salida.SuspendLayout();
             this.tableLayoutPanel_main.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel_CheckBuscarMarcas.SuspendLayout();
+            this.panel_filtrosBuscar.SuspendLayout();
             this.tableFiltros.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,7 +102,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.MediumPurple;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 354);
+            this.panel1.Location = new System.Drawing.Point(0, 464);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(954, 4);
             this.panel1.TabIndex = 9;
@@ -112,7 +113,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(4, 350);
+            this.panel2.Size = new System.Drawing.Size(4, 460);
             this.panel2.TabIndex = 10;
             // 
             // panel3
@@ -121,7 +122,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(950, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(4, 350);
+            this.panel3.Size = new System.Drawing.Size(4, 460);
             this.panel3.TabIndex = 11;
             // 
             // panel4
@@ -233,6 +234,7 @@
             this.comboBox_formatoIN.Name = "comboBox_formatoIN";
             this.comboBox_formatoIN.Size = new System.Drawing.Size(83, 28);
             this.comboBox_formatoIN.TabIndex = 3;
+            this.comboBox_formatoIN.SelectedIndexChanged += new System.EventHandler(this.formatoIN_comboBox_SelectedIndexChanged);
             // 
             // panel_salida
             // 
@@ -314,6 +316,7 @@
             this.comboBox_formatoOUT.Name = "comboBox_formatoOUT";
             this.comboBox_formatoOUT.Size = new System.Drawing.Size(83, 28);
             this.comboBox_formatoOUT.TabIndex = 5;
+            this.comboBox_formatoOUT.SelectedIndexChanged += new System.EventHandler(this.formatoOUT_comboBox_SelectedIndexChanged);
             // 
             // lbl_formatoOUT
             // 
@@ -376,6 +379,7 @@
             this.tableLayoutPanel_main.Controls.Add(this.panel5, 0, 0);
             this.tableLayoutPanel_main.Controls.Add(this.panel_CheckBuscarMarcas, 0, 2);
             this.tableLayoutPanel_main.Controls.Add(this.panelEntrada, 0, 1);
+            this.tableLayoutPanel_main.Controls.Add(this.panel_filtrosBuscar, 1, 2);
             this.tableLayoutPanel_main.Location = new System.Drawing.Point(8, 4);
             this.tableLayoutPanel_main.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel_main.Name = "tableLayoutPanel_main";
@@ -383,7 +387,8 @@
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 346);
+            this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 427);
             this.tableLayoutPanel_main.TabIndex = 16;
             // 
             // btn_ConvertirMarcas
@@ -402,9 +407,9 @@
             this.btn_ConvertirMarcas.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_ConvertirMarcas.Font = new System.Drawing.Font("Ubuntu Mono", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_ConvertirMarcas.ForeColor = System.Drawing.Color.IndianRed;
-            this.btn_ConvertirMarcas.Location = new System.Drawing.Point(474, 304);
+            this.btn_ConvertirMarcas.Location = new System.Drawing.Point(3, 410);
             this.btn_ConvertirMarcas.Name = "btn_ConvertirMarcas";
-            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 39);
+            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 14);
             this.btn_ConvertirMarcas.TabIndex = 0;
             this.btn_ConvertirMarcas.Text = "Convertir Marcas";
             this.btn_ConvertirMarcas.UseVisualStyleBackColor = false;
@@ -431,14 +436,14 @@
             this.panel_CheckBuscarMarcas.Controls.Add(this.chkBox_BuscarMarcas);
             this.panel_CheckBuscarMarcas.Location = new System.Drawing.Point(3, 304);
             this.panel_CheckBuscarMarcas.Name = "panel_CheckBuscarMarcas";
-            this.panel_CheckBuscarMarcas.Size = new System.Drawing.Size(465, 39);
+            this.panel_CheckBuscarMarcas.Size = new System.Drawing.Size(465, 100);
             this.panel_CheckBuscarMarcas.TabIndex = 6;
             // 
             // chkBox_BuscarMarcas
             // 
             this.chkBox_BuscarMarcas.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.chkBox_BuscarMarcas.Font = new System.Drawing.Font("Ubuntu Mono", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.chkBox_BuscarMarcas.Location = new System.Drawing.Point(15, 11);
+            this.chkBox_BuscarMarcas.Location = new System.Drawing.Point(15, 42);
             this.chkBox_BuscarMarcas.Name = "chkBox_BuscarMarcas";
             this.chkBox_BuscarMarcas.Size = new System.Drawing.Size(145, 24);
             this.chkBox_BuscarMarcas.TabIndex = 9;
@@ -450,9 +455,10 @@
             // 
             this.panel_filtrosBuscar.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.panel_filtrosBuscar.BackColor = System.Drawing.Color.RoyalBlue;
-            this.panel_filtrosBuscar.Location = new System.Drawing.Point(3, 353);
+            this.panel_filtrosBuscar.Controls.Add(this.tableFiltros);
+            this.panel_filtrosBuscar.Location = new System.Drawing.Point(474, 304);
             this.panel_filtrosBuscar.Name = "panel_filtrosBuscar";
-            this.panel_filtrosBuscar.Size = new System.Drawing.Size(0, 0);
+            this.panel_filtrosBuscar.Size = new System.Drawing.Size(465, 100);
             this.panel_filtrosBuscar.TabIndex = 18;
             // 
             // tableFiltros
@@ -463,15 +469,15 @@
             this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableFiltros.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableFiltros.Controls.Add(this.checkBox1, 2, 2);
-            this.tableFiltros.Controls.Add(this.checkBox4, 2, 0);
-            this.tableFiltros.Controls.Add(this.checkBox5, 2, 1);
-            this.tableFiltros.Controls.Add(this.button1, 1, 2);
-            this.tableFiltros.Controls.Add(this.label6, 0, 2);
-            this.tableFiltros.Controls.Add(this.label7, 0, 1);
-            this.tableFiltros.Controls.Add(this.button2, 1, 1);
-            this.tableFiltros.Controls.Add(this.textBox1, 1, 0);
-            this.tableFiltros.Controls.Add(this.label8, 0, 0);
+            this.tableFiltros.Controls.Add(this.chkBox_filtroDateFin, 2, 2);
+            this.tableFiltros.Controls.Add(this.chkBox_filtroNroTarjeta, 2, 0);
+            this.tableFiltros.Controls.Add(this.chkBox_filtroDateIni, 2, 1);
+            this.tableFiltros.Controls.Add(this.lbl_FechaFin, 0, 2);
+            this.tableFiltros.Controls.Add(this.lbl_FechaIni, 0, 1);
+            this.tableFiltros.Controls.Add(this.txtBox_nroTarjeta, 1, 0);
+            this.tableFiltros.Controls.Add(this.lbl_NroTarjeta, 0, 0);
+            this.tableFiltros.Controls.Add(this.dateTime_ini, 1, 1);
+            this.tableFiltros.Controls.Add(this.dateTime_fin, 1, 2);
             this.tableFiltros.Location = new System.Drawing.Point(0, 0);
             this.tableFiltros.Name = "tableFiltros";
             this.tableFiltros.RowCount = 3;
@@ -481,122 +487,121 @@
             this.tableFiltros.Size = new System.Drawing.Size(462, 95);
             this.tableFiltros.TabIndex = 13;
             // 
-            // checkBox1
+            // chkBox_filtroDateFin
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkBox_filtroDateFin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox1.Location = new System.Drawing.Point(445, 65);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(14, 27);
-            this.checkBox1.TabIndex = 15;
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkBox_filtroDateFin.AutoSize = true;
+            this.chkBox_filtroDateFin.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroDateFin.Location = new System.Drawing.Point(445, 65);
+            this.chkBox_filtroDateFin.Name = "chkBox_filtroDateFin";
+            this.chkBox_filtroDateFin.Size = new System.Drawing.Size(14, 27);
+            this.chkBox_filtroDateFin.TabIndex = 15;
+            this.chkBox_filtroDateFin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroDateFin.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // chkBox_filtroNroTarjeta
             // 
-            this.checkBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkBox_filtroNroTarjeta.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox4.Location = new System.Drawing.Point(445, 3);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(14, 25);
-            this.checkBox4.TabIndex = 14;
-            this.checkBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.chkBox_filtroNroTarjeta.AutoSize = true;
+            this.chkBox_filtroNroTarjeta.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroNroTarjeta.Location = new System.Drawing.Point(445, 3);
+            this.chkBox_filtroNroTarjeta.Name = "chkBox_filtroNroTarjeta";
+            this.chkBox_filtroNroTarjeta.Size = new System.Drawing.Size(14, 25);
+            this.chkBox_filtroNroTarjeta.TabIndex = 14;
+            this.chkBox_filtroNroTarjeta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroNroTarjeta.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // chkBox_filtroDateIni
             // 
-            this.checkBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkBox_filtroDateIni.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox5.Location = new System.Drawing.Point(445, 34);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(14, 25);
-            this.checkBox5.TabIndex = 15;
-            this.checkBox5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.chkBox_filtroDateIni.AutoSize = true;
+            this.chkBox_filtroDateIni.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroDateIni.Location = new System.Drawing.Point(445, 34);
+            this.chkBox_filtroDateIni.Name = "chkBox_filtroDateIni";
+            this.chkBox_filtroDateIni.Size = new System.Drawing.Size(14, 25);
+            this.chkBox_filtroDateIni.TabIndex = 15;
+            this.chkBox_filtroDateIni.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkBox_filtroDateIni.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // lbl_FechaFin
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(224, 65);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(215, 27);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbl_FechaFin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label6.Location = new System.Drawing.Point(3, 62);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(215, 33);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Fecha Fin";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_FechaFin.AutoSize = true;
+            this.lbl_FechaFin.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_FechaFin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_FechaFin.Location = new System.Drawing.Point(3, 62);
+            this.lbl_FechaFin.Name = "lbl_FechaFin";
+            this.lbl_FechaFin.Size = new System.Drawing.Size(215, 33);
+            this.lbl_FechaFin.TabIndex = 12;
+            this.lbl_FechaFin.Text = "Fecha Fin";
+            this.lbl_FechaFin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label7
+            // lbl_FechaIni
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbl_FechaIni.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label7.Location = new System.Drawing.Point(3, 31);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(215, 31);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Fecha Inicio";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_FechaIni.AutoSize = true;
+            this.lbl_FechaIni.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_FechaIni.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_FechaIni.Location = new System.Drawing.Point(3, 31);
+            this.lbl_FechaIni.Name = "lbl_FechaIni";
+            this.lbl_FechaIni.Size = new System.Drawing.Size(215, 31);
+            this.lbl_FechaIni.TabIndex = 11;
+            this.lbl_FechaIni.Text = "Fecha Inicio";
+            this.lbl_FechaIni.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // button2
+            // txtBox_nroTarjeta
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(224, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(215, 25);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.txtBox_nroTarjeta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBox_nroTarjeta.Font = new System.Drawing.Font("Ubuntu Mono", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtBox_nroTarjeta.Location = new System.Drawing.Point(224, 3);
+            this.txtBox_nroTarjeta.Name = "txtBox_nroTarjeta";
+            this.txtBox_nroTarjeta.Size = new System.Drawing.Size(215, 26);
+            this.txtBox_nroTarjeta.TabIndex = 8;
+            this.txtBox_nroTarjeta.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBox_nroTarjeta.TextChanged += new System.EventHandler(this.filtro_NroTarjeta_Changed);
             // 
-            // textBox1
+            // lbl_NroTarjeta
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Font = new System.Drawing.Font("Ubuntu Mono", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(224, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(215, 26);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lbl_NroTarjeta.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label8.Location = new System.Drawing.Point(3, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(215, 31);
-            this.label8.TabIndex = 10;
-            this.label8.Text = "Filtrar x nro Tarjeta";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbl_NroTarjeta.AutoSize = true;
+            this.lbl_NroTarjeta.Font = new System.Drawing.Font("Ubuntu Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_NroTarjeta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbl_NroTarjeta.Location = new System.Drawing.Point(3, 0);
+            this.lbl_NroTarjeta.Name = "lbl_NroTarjeta";
+            this.lbl_NroTarjeta.Size = new System.Drawing.Size(215, 31);
+            this.lbl_NroTarjeta.TabIndex = 10;
+            this.lbl_NroTarjeta.Text = "Filtrar x nro Tarjeta";
+            this.lbl_NroTarjeta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // dateTime_ini
+            // 
+            this.dateTime_ini.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTime_ini.Location = new System.Drawing.Point(224, 35);
+            this.dateTime_ini.Name = "dateTime_ini";
+            this.dateTime_ini.Size = new System.Drawing.Size(215, 23);
+            this.dateTime_ini.TabIndex = 16;
+            this.dateTime_ini.ValueChanged += new System.EventHandler(this.filtro_DateInicial_Changed);
+            // 
+            // dateTime_fin
+            // 
+            this.dateTime_fin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTime_fin.Location = new System.Drawing.Point(224, 67);
+            this.dateTime_fin.Name = "dateTime_fin";
+            this.dateTime_fin.Size = new System.Drawing.Size(215, 23);
+            this.dateTime_fin.TabIndex = 17;
+            this.dateTime_fin.ValueChanged += new System.EventHandler(this.filtro_DateFinal_Changed);
             // 
             // Inicio
             // 
@@ -605,7 +610,7 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Navy;
-            this.ClientSize = new System.Drawing.Size(954, 358);
+            this.ClientSize = new System.Drawing.Size(954, 468);
             this.Controls.Add(this.tableLayoutPanel_main);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
@@ -626,6 +631,7 @@
             this.tableLayoutPanel_main.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel_CheckBuscarMarcas.ResumeLayout(false);
+            this.panel_filtrosBuscar.ResumeLayout(false);
             this.tableFiltros.ResumeLayout(false);
             this.tableFiltros.PerformLayout();
             this.ResumeLayout(false);
@@ -661,18 +667,20 @@
         private TableLayoutPanel tableLayoutPanel_main;
         private Panel panel_filtrosBuscar;
         private TableLayoutPanel tableFiltros;
-        private CheckBox checkBox1;
-        private CheckBox checkBox4;
-        private CheckBox checkBox5;
-        private Button button1;
-        private Label label6;
-        private Label label7;
-        private Button button2;
-        private TextBox textBox1;
-        private Label label8;
+        private CheckBox chkBox_filtroDateFin;
+        private CheckBox chkBox_filtroNroTarjeta;
+        private CheckBox chkBox_filtroDateIni;
+        private TextBox txtBox_nroTarjeta;
+
+        private Label lbl_FechaFin;
+        private Label lbl_FechaIni;
+        
+        private Label lbl_NroTarjeta;
         private Panel panel5;
         private Button btn_ConvertirMarcas;
         private Panel panel_CheckBuscarMarcas;
         private CheckBox chkBox_BuscarMarcas;
+        private DateTimePicker dateTime_ini;
+        private DateTimePicker dateTime_fin;
     }
 }

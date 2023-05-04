@@ -10,19 +10,21 @@ namespace ConversorMarcas.Modelo.Entidades
         Formato formato;
         string archivoOrigen;
 
+        //Una Linea si es nueva no tiene archivo de origen, su objetivo es escribirse en un archivo nuevo.
         public Linea(int numLinea, string valorLinea, Formato formato)
         {
             this.numLinea = numLinea;
             this.valorLinea = valorLinea;
             this.formato = formato;
-            archivoOrigen = "";
+            ObtenerMarcas();
         }
         public Linea(int numLinea, string valorLinea, Formato formato, string archivoOrigen)
         {
             this.numLinea = numLinea;
             this.valorLinea = valorLinea;
-            this.formato = formato;
+            this.formato = formato;            
             this.archivoOrigen = archivoOrigen;
+            ObtenerMarcas();
         }
 
         public string Valor { get => valorLinea; set => valorLinea = value; }
@@ -50,7 +52,7 @@ namespace ConversorMarcas.Modelo.Entidades
 
                     valorDelParamActual = valorLinea.Substring(p.Posicion - 1, p.CantDigitos);
                     p.Valor = valorDelParamActual;
-                    Parametro paramHeaderNuevo = new Parametro(p.Nombre, p.Valor);
+                    Parametro paramHeaderNuevo = new Parametro(0, p.Nombre, p.Valor);
                     paramsHeaderMarca.Add(paramHeaderNuevo);
                 }
 
@@ -66,7 +68,7 @@ namespace ConversorMarcas.Modelo.Entidades
                 List<Parametro> paramsMarca = new();
                 if (formato.TieneHeader) paramsMarca.AddRange(paramsHeaderMarca);
 
-                Marca nueva = new Marca();
+                Marca nueva = new Marca(this);
                 List<Parametro> paramsBodyMarca = new();
                 foreach (Parametro p in formato.GetBody().GetParametros())
                 {
@@ -74,7 +76,7 @@ namespace ConversorMarcas.Modelo.Entidades
                     //Corregir posicion con posicionActual
                     valorDelParamActual = valorLinea.Substring(p.Posicion + posActual - 1, p.CantDigitos);
                     p.Valor = valorDelParamActual;
-                    Parametro paramBodyNuevo = new Parametro(p.Nombre, p.Valor);
+                    Parametro paramBodyNuevo = new Parametro(0,p.Nombre, p.Valor);
                     paramsBodyMarca.Add(paramBodyNuevo);
                 }
                 paramsMarca.AddRange(paramsBodyMarca);
@@ -86,7 +88,6 @@ namespace ConversorMarcas.Modelo.Entidades
                 }
                 posActual += largoSeccionBody;
             }
-
             return marcasObtenidas;
         }
 

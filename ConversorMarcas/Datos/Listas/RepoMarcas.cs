@@ -10,8 +10,12 @@ namespace ConversorMarcas.Datos.Listas
         private List<Marca> marcasFiltradas = new List<Marca>();
         public static RepoMarcas GetInstancia() { return instancia; }
 
+        //considerar una verificacion de marca repetida.
         public bool Alta(List<Marca> marcas)
-        { if (marcas == null) return false; if (marcas.Count == 0) return false; this.marcas = marcas; return true; }
+        { 
+            if (marcas == null) return false; if (marcas.Count == 0) return false; this.marcas = marcas; 
+            return true; 
+        }
         public bool Alta(Marca marca)
         {
             if (marca == null) return false;
@@ -29,9 +33,13 @@ namespace ConversorMarcas.Datos.Listas
         { foreach (Marca m in marcas) { if (m.Id == id) return m; } return null; }
         public List<Linea> GetLineasXFormato(Formato formato)
         {
+            return GetLineasXFormato(this.marcas,formato);
+        }
+        public List<Linea> GetLineasXFormato(List<Marca> marcasATransformar,Formato formato)
+        {
             List<Linea> lineas = new List<Linea>();
             int numLinea = 0;
-            foreach (Marca m in marcas)
+            foreach (Marca m in marcasATransformar)
             {
                 string valorLinea = m.ToString(formato);
                 Linea l = new Linea(numLinea++, valorLinea, formato);
@@ -40,6 +48,7 @@ namespace ConversorMarcas.Datos.Listas
             }
             return lineas;
         }
+
 
         public List<Marca> GetMarcasXFuncionarioYFecha(Funcionario funcionario, DateTime inicio, DateTime fin)
         {
@@ -54,6 +63,21 @@ namespace ConversorMarcas.Datos.Listas
             {
                 nroActual += m.ParametroXNombre("nroTarjeta");
                 if (nroActual == nroTarjetaBuscado)
+                {
+                    encontradas.Add(m);
+                }
+            }
+            return encontradas;
+        }
+        public List<Marca> GetMarcasXFuncionario(int nroFunc)
+        {
+            List<Marca> encontradas = new List<Marca>();
+            string nroBuscado = ""+nroFunc;
+            string nroActual = "";
+            foreach (Marca m in marcas)
+            {
+                nroActual += m.ParametroXNombre("nroTarjeta");
+                if (nroActual == nroBuscado)
                 {
                     encontradas.Add(m);
                 }
