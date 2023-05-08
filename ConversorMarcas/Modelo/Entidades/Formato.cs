@@ -7,6 +7,7 @@ namespace ConversorMarcas.Modelo.Entidades
         Cliente cliente;
         Seccion body = new Seccion("Body");
         Seccion header = new Seccion("Header");
+        int ultIdParametro = 0;
         bool tieneHeader;
         public Formato(string nombre, string ext, Cliente cliente, bool tieneHeader)
         {
@@ -27,6 +28,47 @@ namespace ConversorMarcas.Modelo.Entidades
         public bool TieneHeader { get => tieneHeader; set => tieneHeader = value; }
         public Seccion GetBody() { return body; }
         public Seccion GetHeader() { return header; }
+
+        public bool AgregarParametro(string nombre, int posInicial, int cantDigitos, bool esHeader)
+        {
+            Parametro nuevo = new Parametro(nombre, posInicial, cantDigitos);
+            //nuevo.SetId(++ultIdParametro);
+            if (esHeader)
+            {
+                if (GetHeader().AgregarParametro(nuevo)) 
+                {
+                    nuevo.Id = ++ultIdParametro;
+                    return true;
+                } 
+            }
+            else 
+            {
+                if (GetBody().AgregarParametro(nuevo))
+                {
+                    nuevo.Id = ++ultIdParametro;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool QuitarParametro(Parametro aBorrar)
+        {
+            if (aBorrar is null) return false;
+            if (GetHeader().QuitarParametro(aBorrar))
+            {
+                //Ajustar ids ?
+                return true;
+            }
+            else
+            {
+                if (GetBody().QuitarParametro(aBorrar))
+                {
+                //Ajustar ids ?
+                return true;
+                }
+            }
+            return false;
+        }
         public List<Parametro> GetParametros()
         {
             List<Parametro> paramOut = new List<Parametro>();
@@ -34,7 +76,7 @@ namespace ConversorMarcas.Modelo.Entidades
             {
                 paramOut.AddRange(header.GetParametros());
             }
-            paramOut = body.GetParametros();
+            paramOut.AddRange(body.GetParametros());
             return paramOut;
         }
         public int GetCantParametros() { return body.GetCantParametros() + header.GetCantParametros(); }

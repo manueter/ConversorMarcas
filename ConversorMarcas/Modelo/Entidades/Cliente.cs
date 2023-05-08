@@ -32,7 +32,7 @@ namespace ConversorMarcas.Modelo.Entidades
             if (formato == null) return false;
             return formatos.Remove(formato); 
         }
-        public Formato ObtenerFormatoXNombre(string nombre) 
+        public Formato GetFormatoXNombre(string nombre) 
         {
             foreach (Formato f in formatos)
             {

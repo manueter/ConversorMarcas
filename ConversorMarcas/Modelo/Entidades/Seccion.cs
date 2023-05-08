@@ -6,7 +6,7 @@ namespace ConversorMarcas.Modelo.Entidades
         List<Parametro> parametros = new();
         int largoSeccion = 0;
         int cantParametros = 0;
-        int ultIdParametro = 0 ;
+        //int ultIdParametro = 0 ;
         Parametro mayorPosicion = null;
         public Seccion(string nombre) { Nombre = nombre; }
         public string Nombre { get => nombre; set => nombre = value; }
@@ -14,7 +14,8 @@ namespace ConversorMarcas.Modelo.Entidades
         public int GetLargoSeccion() { return largoSeccion; }
         public List<Parametro> GetParametros() { return parametros; }
         public int GetCantParametros() { return cantParametros; }
-        public bool AgregarParametroVacio(string nombre)
+
+        public bool AgregarParametro(Parametro nuevo)
         {
             if (nombre is null) return false;
             foreach (Parametro pl in parametros)
@@ -23,28 +24,12 @@ namespace ConversorMarcas.Modelo.Entidades
                 {
                     return false;
                 }
-                Parametro nuevo = new Parametro(++ultIdParametro, nombre);
-                parametros.Add(nuevo);
-                cantParametros++;
-                return true;
-            }
-            return false;
-        }
-        public bool AgregarParametro(string nombre, int posInicial, int cantDigitos)
-        {
-            if (nombre is null) return false;
-            foreach (Parametro pl in parametros)
-            {
-                if (nombre == pl.Nombre)
-                {
-                    return false;
-                }
-                if (posInicial>= pl.Posicion && posInicial < pl.Posicion + pl.CantDigitos)
+                if (nuevo.Posicion >= pl.Posicion && nuevo.Posicion < pl.Posicion + pl.CantDigitos)
                 {
                     return false;
                 }
             }
-            Parametro nuevo = new Parametro(++ultIdParametro, nombre, posInicial, cantDigitos);
+            //Parametro nuevo = new Parametro(++ultIdParametro, nombre, posInicial, cantDigitos);
             parametros.Add(nuevo);
             cantParametros++;
 
@@ -61,7 +46,7 @@ namespace ConversorMarcas.Modelo.Entidades
             if (aborrar is null) return false;
             foreach (Parametro pl in parametros)
             {
-                if (aborrar.GetId() == pl.GetId())
+                if (aborrar.Id == pl.Id)
                 {
                     largoSeccion -= pl.CantDigitos;
 
@@ -100,7 +85,7 @@ namespace ConversorMarcas.Modelo.Entidades
         {
             foreach (Parametro param in parametros)
             {
-                if (idBuscado == param.GetId())
+                if (idBuscado == param.Id)
                 {
                     return param;
                 }

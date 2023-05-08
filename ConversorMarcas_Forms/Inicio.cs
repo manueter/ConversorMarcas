@@ -196,7 +196,12 @@ namespace ConversorMarcas_Forms
                                 bool filtraNroFunc = this.chkBox_filtroNroTarjeta.Checked;
 
                                 msgOut = procesos.BuscarMarcas
-                                    (fileIN, nombreArchivoOut, folderOUT, formatoIn, formatoOut, filtraNroFunc, filtro_nroFunc, filtraDateIni, filtro_fechaIni, filtraDateFin, filtro_fechaFin);
+                                    (fileIN, 
+                                    nombreArchivoOut, folderOUT, 
+                                    formatoIn, formatoOut, 
+                                    filtraNroFunc, filtro_nroFunc, 
+                                    filtraDateIni, filtro_fechaIni, 
+                                    filtraDateFin, filtro_fechaFin);
                             }
                         }
                         else

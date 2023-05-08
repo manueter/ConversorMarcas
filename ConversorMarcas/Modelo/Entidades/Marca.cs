@@ -13,28 +13,31 @@ namespace ConversorMarcas.Modelo.Entidades
             lineaOrigen = linea;
             Id = ++ultId;
         }
+        /*
         public Marca(string reloj, string fecha, char tipo, string hora, string nroTarjeta)
         {
             Id = ++ultId;
 
-            ParametrosBase();
+            //ParametrosBase();
             ParametroXNombre("reloj").Valor = reloj;
             ParametroXNombre("fecha").Valor = fecha;
             ParametroXNombre("tipo").Valor = "" + tipo;
             ParametroXNombre("hora").Valor = hora;
             ParametroXNombre("nroTarjeta").Valor = nroTarjeta;
         }
+        */
 
         //private int ultPos;
         public Seccion GetSeccion() => seccionMarca;
         public Linea GetLineaOrigen() => lineaOrigen;
         public void ParametrosBase()
         {
+            /*
             seccionMarca.AgregarParametroVacio("reloj");
             seccionMarca.AgregarParametroVacio("fecha");
             seccionMarca.AgregarParametroVacio("hora");
             seccionMarca.AgregarParametroVacio("tipo");
-            seccionMarca.AgregarParametroVacio("nroTarjeta");
+            seccionMarca.AgregarParametroVacio("nroTarjeta");*/
         }
 
         public bool AgregarParametros(List<Parametro> parametrosNuevos)

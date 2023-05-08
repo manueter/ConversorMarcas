@@ -39,12 +39,12 @@ namespace ConversorMarcas_Forms
         private void comboBox_formatos_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-            Formato obtenido = cliente.ObtenerFormatoXNombre(cb.Text);
+            Formato obtenido = cliente.GetFormatoXNombre(cb.Text);
             if (obtenido != null) 
             {
                 formatoSeleccionado = obtenido;
             }
-            MostrarFormato();
+            MostrarFormato(obtenido);
         }
         private void IniciarTablaParametros() 
         {
@@ -74,47 +74,54 @@ namespace ConversorMarcas_Forms
                 //IniciarTablaParametros();
             }
         }
-        private void MostrarFormato() 
+        private void MostrarFormato(Formato formato) 
         {
             IniciarTablaParametros();
             int row = 0;
-            
             int cantParametros = formatoSeleccionado.GetCantParametros();
-            parametrosEditados = new string[cantParametros][];
+            parametrosEditados = new string[cantParametros+1][];
+            
             //parametrosEditados = new string[cantParametros][];
             foreach (Parametro p in formatoSeleccionado.GetParametros()) 
             {
-                parametrosEditados[row] = new string[table_parametros.ColumnCount];
                 row++;
+                parametrosEditados[row] = new string[table_parametros.ColumnCount+1];
+                //Se agrega la columna 0 para el Id del Parametro
+                
                 int column = 0;
+                parametrosEditados[row][column] = ""+p.GetId();
+
                 table_parametros.RowCount++;
                 table_parametros.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-                
+
                 //Agregar HANDLERS Y FUNCIONES ASOCIADAS
 
                 TextBox textBox_nombreParam = new TextBox() { Text=p.Nombre };
                 textBox_nombreParam.TextChanged += new EventHandler(textChange_Handler);
                 //lista_tuplaParametros.Add((column, NombreColumna.nombre));
-                table_parametros.Controls.Add(textBox_nombreParam, column++, row);
+
                 
+                table_parametros.Controls.Add(textBox_nombreParam, column++, row);
+                parametrosEditados[row][column] = new string("");
 
                 NumericUpDown numericUpDown_posIniParam = new NumericUpDown() { Value = p.Posicion };
                 numericUpDown_posIniParam.ValueChanged += new EventHandler(numericUpDownChenge_Handler);
                 //lista_tuplaParametros.Add((column, NombreColumna.posIni));
                 table_parametros.Controls.Add(numericUpDown_posIniParam, column++, row);
-                
-                
+                parametrosEditados[row][column] = new string("");
+
                 NumericUpDown numericUpDown_cantDigParam = new NumericUpDown() { Value = p.CantDigitos };
                 numericUpDown_cantDigParam.ValueChanged += new EventHandler(numericUpDownChenge_Handler);
                 //lista_tuplaParametros.Add((column, NombreColumna.cantDigitos));
                 table_parametros.Controls.Add(numericUpDown_cantDigParam, column++, row);
+                parametrosEditados[row][column] = new string("");
 
                 CheckBox checkBox_esHeader = new CheckBox() { Checked = false };
                 checkBox_esHeader.CheckedChanged += new EventHandler(checkBoxChange_Handler);
                 //lista_tuplaParametros.Add((column, NombreColumna.cantDigitos));
-                table_parametros.Controls.Add(numericUpDown_cantDigParam, column++, row);
-
-
+                
+                table_parametros.Controls.Add(checkBox_esHeader, column++, row);
+                parametrosEditados[row][column] = new string("");
             }
             // La lista debe tener la misma cantidad que parametros.
             
@@ -124,8 +131,8 @@ namespace ConversorMarcas_Forms
         {
             NumericUpDown numericUpDown = (NumericUpDown)sender;
             TableLayoutPanelCellPosition cellPosition =  table_parametros.GetCellPosition(numericUpDown);
-            // row - 1 porque la primer fila esta ocupada por los cabezales
-            parametrosEditados[cellPosition.Row-1][cellPosition.Column] = numericUpDown.Value.ToString(); 
+
+            parametrosEditados[cellPosition.Row][cellPosition.Column+1] = numericUpDown.Value.ToString(); 
         }
         private void textChange_Handler(object sender, EventArgs e) 
         {
@@ -133,7 +140,7 @@ namespace ConversorMarcas_Forms
             TableLayoutPanelCellPosition cellPosition = table_parametros.GetCellPosition(textbox);
 
             //lista_tuplaParametros[cellPosition.Row][] = (numericUpDown.Value)
-            parametrosEditados[cellPosition.Row][cellPosition.Column] = textbox.Text;
+            parametrosEditados[cellPosition.Row][cellPosition.Column+1] = textbox.Text;
         }
         private void checkBoxChange_Handler(object sender, EventArgs e)
         {
@@ -143,52 +150,62 @@ namespace ConversorMarcas_Forms
             //lista_tuplaParametros[cellPosition.Row][] = (numericUpDown.Value)
             string valor = "false";
             if (checkBox.Checked) valor = "true";
-            parametrosEditados[cellPosition.Row][cellPosition.Column] = valor;
+            //parametrosEditados[cellPosition.Row][cellPosition.Column] = new string(valor);
+            parametrosEditados[cellPosition.Row][cellPosition.Column+1] = valor;
         }
 
         private void btn_Confirmar_Click(object sender, EventArgs e)
         {
             //Revisar lista de parametros y guardarlos en la informacion del FORMATO.
+            int r = 1;
             int rows = parametrosEditados.Length;
-            int columns = parametrosEditados[0].Length;
+            int columns = parametrosEditados[r].Length;
 
-            int r = 0;
             formatoSeleccionado.GetParametros();
             while (r < rows) 
             {
-
                 if (parametrosEditados[r].Length > 0) 
                 {
-                    int c = 0;
+                    int c = 1;
                     while (c < parametrosEditados[r].Length) 
                     {
                         string valorModificado = parametrosEditados[r][c];
-                        if (valorModificado != null)
+                        if (valorModificado != "")
                         {
                             //Obtener id de parametro = r;
                             bool esHeader = false;
-                            if (parametrosEditados[r][3]!=null)
+                            if (parametrosEditados[r][3]!="")
                             {
                                 string str_esHeader = parametrosEditados[r][3];
                                 if (str_esHeader == "true") 
                                 { 
-                                    esHeader = true;
+                                   // esHeader = true;
                                 }
                             }
                             else
                             {
                                 CheckBox checkBox_esHeader = (CheckBox)table_parametros.GetControlFromPosition(3, r);
-                                if (checkBox_esHeader.Checked) esHeader= true;
+                               // if (checkBox_esHeader.Checked) esHeader= true;
                             }
 
+                            Parametro paramAEditar;
                             int id = Int32.Parse(parametrosEditados[r][0]) ; 
                             if (esHeader)
-                            { }
+                            {
+                                paramAEditar = formatoSeleccionado.GetHeader().ParametroXId(id);
+                            }
                             else 
                             {
-                                formatoSeleccionado.GetBody().ParametroXId(id);
+                                paramAEditar = formatoSeleccionado.GetBody().ParametroXId(id);
+                                //paramAEditar. = parametrosEditados[r][0];
                             }
-                            
+
+                            if (paramAEditar != null) 
+                            {
+                                if (parametrosEditados[r][1] != "") paramAEditar.Nombre = parametrosEditados[r][1];
+                                if (parametrosEditados[r][2] != "") paramAEditar.Posicion = Int32.Parse(parametrosEditados[r][2]);
+                                if (parametrosEditados[r][3] != "") paramAEditar.CantDigitos = Int32.Parse(parametrosEditados[r][3]);
+                            }
                             //valorModificado;
                         }
                         c++;
