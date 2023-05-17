@@ -101,7 +101,7 @@ namespace ConversorMarcas_Forms
         private void formatoOUT_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            formatoIn = RepoFormatos.GetInstancia().BuscarXNombre(cmb.Text);
+            formatoOut = RepoFormatos.GetInstancia().BuscarXNombre(cmb.Text);
         }
 
         private void txt_ArchivoIN_Clicked(object sender, EventArgs e)
@@ -178,8 +178,9 @@ namespace ConversorMarcas_Forms
                 {
                     Procesos procesos = new Procesos(sesion);
                     if (nombreArchivoOut != "" && nombreArchivoOut != null &&
-                       folderOUT != "" && folderOUT != null &&
-                       folderIN != "" && folderIN != null)
+                       ((nombreArchivoIn != "" && nombreArchivoIn != null) || (folderIN != "" && folderIN != null)) &&
+                            folderOUT != "" && folderOUT!=null
+                       )
                     {
                         if (unSoloArchivo && nombreArchivoIn != null)
                         {
@@ -190,17 +191,17 @@ namespace ConversorMarcas_Forms
                             }
                             else
                             {
-                                
-                                bool filtraDateFin=this.chkBox_filtroDateFin.Checked;
+
+                                bool filtraDateFin = this.chkBox_filtroDateFin.Checked;
                                 bool filtraDateIni = this.chkBox_filtroDateIni.Checked;
                                 bool filtraNroFunc = this.chkBox_filtroNroTarjeta.Checked;
 
                                 msgOut = procesos.BuscarMarcas
-                                    (fileIN, 
-                                    nombreArchivoOut, folderOUT, 
-                                    formatoIn, formatoOut, 
-                                    filtraNroFunc, filtro_nroFunc, 
-                                    filtraDateIni, filtro_fechaIni, 
+                                    (fileIN,
+                                    nombreArchivoOut, folderOUT,
+                                    formatoIn, formatoOut,
+                                    filtraNroFunc, filtro_nroFunc,
+                                    filtraDateIni, filtro_fechaIni,
                                     filtraDateFin, filtro_fechaFin);
                             }
                         }
@@ -229,12 +230,16 @@ namespace ConversorMarcas_Forms
                     }
                     else
                     {
-                        if (folderIN == null || folderIN == "") { msgOut += "Seleccionar carpeta inicial. \n"; }
-                        if (folderOUT == "" || folderOUT == null) { msgOut += "Seleccionar carpeta de salida. \n"; }
-                        if (nombreArchivoOut == "" || nombreArchivoOut == null) { msgOut += "Seleccionar archivo salida. \n"; }
-                        messageBox = new MessageBox("ERROR", msgOut);
-                        messageBox.ShowDialog();
+                        if (nombreArchivoIn == "" || folderIN == "")
+                        {
+                            msgOut += "Seleccionar carpeta o archivo inicial. \n";
+                        }
                     }
+
+                    if (folderOUT == "" || folderOUT == null) { msgOut += "Seleccionar carpeta de salida. \n"; }
+                    if (nombreArchivoOut == "" || nombreArchivoOut == null) { msgOut += "Seleccionar archivo salida. \n"; }
+                    messageBox = new MessageBox("ERROR", msgOut);
+                    messageBox.ShowDialog();
                 }
                 else
                 {
@@ -243,7 +248,6 @@ namespace ConversorMarcas_Forms
                     messageBox.ShowDialog();
                 }
             }
-
             btn_ConvertirMarcas.ForeColor = Color.White;
         }
 

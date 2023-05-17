@@ -6,7 +6,7 @@ namespace ConversorMarcas.Modelo.Entidades
         List<Parametro> parametros = new();
         int largoSeccion = 0;
         int cantParametros = 0;
-        //int ultIdParametro = 0 ;
+
         Parametro mayorPosicion = null;
         public Seccion(string nombre) { Nombre = nombre; }
         public string Nombre { get => nombre; set => nombre = value; }
@@ -17,10 +17,9 @@ namespace ConversorMarcas.Modelo.Entidades
 
         public bool AgregarParametro(Parametro nuevo)
         {
-            if (nombre is null) return false;
             foreach (Parametro pl in parametros)
             {
-                if (nombre == pl.Nombre)
+                if (nuevo.Nombre == pl.Nombre)
                 {
                     return false;
                 }
@@ -69,7 +68,7 @@ namespace ConversorMarcas.Modelo.Entidades
                 if (mayPos.Posicion < p.Posicion) { mayPos = p; }
             }
         }
-        public Parametro ParametroXNombre(string nombreBuscado)
+        public Parametro ParamXNombre(string nombreBuscado)
         {
             if (nombreBuscado is null) return null;
             foreach (Parametro param in parametros)
@@ -81,7 +80,7 @@ namespace ConversorMarcas.Modelo.Entidades
             }
             return null;
         }
-        public Parametro ParametroXId(int idBuscado)
+        public Parametro ParamXId(int idBuscado)
         {
             foreach (Parametro param in parametros)
             {

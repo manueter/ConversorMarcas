@@ -5,7 +5,9 @@ namespace ConversorMarcas.Modelo.Entidades
         int id;
         static int ultId = 0;
         Linea lineaOrigen;
-        Seccion seccionMarca = new Seccion("Body");
+        Seccion seccion = new Seccion("marca");
+        //List<Parametro> parametros = new List<Parametro>();
+        
         public int Id { get => id; set => id = value; }
 
         public Marca(Linea linea)
@@ -13,45 +15,36 @@ namespace ConversorMarcas.Modelo.Entidades
             lineaOrigen = linea;
             Id = ++ultId;
         }
-        /*
-        public Marca(string reloj, string fecha, char tipo, string hora, string nroTarjeta)
-        {
-            Id = ++ultId;
-
-            //ParametrosBase();
-            ParametroXNombre("reloj").Valor = reloj;
-            ParametroXNombre("fecha").Valor = fecha;
-            ParametroXNombre("tipo").Valor = "" + tipo;
-            ParametroXNombre("hora").Valor = hora;
-            ParametroXNombre("nroTarjeta").Valor = nroTarjeta;
-        }
-        */
-
-        //private int ultPos;
-        public Seccion GetSeccion() => seccionMarca;
         public Linea GetLineaOrigen() => lineaOrigen;
         public void ParametrosBase()
         {
-            /*
-            seccionMarca.AgregarParametroVacio("reloj");
-            seccionMarca.AgregarParametroVacio("fecha");
-            seccionMarca.AgregarParametroVacio("hora");
-            seccionMarca.AgregarParametroVacio("tipo");
-            seccionMarca.AgregarParametroVacio("nroTarjeta");*/
+            seccion.AgregarParametro(new Parametro("reloj"));
+            seccion.AgregarParametro(new Parametro("fecha"));
+            seccion.AgregarParametro(new Parametro("hora"));
+            seccion.AgregarParametro(new Parametro("tipo"));
+            seccion.AgregarParametro(new Parametro("nro_tarjeta"));
         }
 
-        public bool AgregarParametros(List<Parametro> parametrosNuevos)
+        public List<Parametro> GetParametros() {return seccion.GetParametros();}
+        public bool AgregarParametro(Parametro nuevo)
         {
-            foreach (Parametro nuevo in parametrosNuevos)
+            if (nuevo.Valor != "" && nuevo.Nombre!="") 
             {
-               // if (!seccionMarca.AgregarParametros(nuevo)) return false;
+                return seccion.AgregarParametro(nuevo);
+            }
+            return false;
+        }
+        public bool AgregarParametros(List<Parametro> nuevos)
+        {
+            foreach (Parametro p in nuevos) 
+            {
+                if (!seccion.AgregarParametro(p)) return false;
             }
             return true;
         }
-
         public Parametro ParametroXNombre(string nombre)
         {
-            foreach (Parametro p in seccionMarca.GetParametros())
+            foreach (Parametro p in seccion.GetParametros())
             {
                 if (p.Nombre == nombre)
                 {
@@ -110,7 +103,7 @@ namespace ConversorMarcas.Modelo.Entidades
             arrayValores = new string[mayorPos];
             foreach (Parametro paramFormato in formato.GetBody().GetParametros())
             {
-                pMarca = seccionMarca.ParametroXNombre(paramFormato.Nombre);
+                pMarca = ParametroXNombre(paramFormato.Nombre);
                 if (pMarca != null)
                 {
                     if (pMarca != null) { arrayValores[paramFormato.Posicion] = pMarca.Valor; }

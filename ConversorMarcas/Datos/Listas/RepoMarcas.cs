@@ -57,12 +57,14 @@ namespace ConversorMarcas.Datos.Listas
         public List<Marca> GetMarcasXFuncionario(Funcionario funcionario)
         {
             List<Marca> encontradas = new List<Marca>();
-            string nroTarjetaBuscado = funcionario.NroTarjeta;
-            string nroActual = "";
+
+            string nro_actual_str = "";
             foreach (Marca m in marcas)
             {
-                nroActual += m.ParametroXNombre("nroTarjeta");
-                if (nroActual == nroTarjetaBuscado)
+                nro_actual_str += m.ParametroXNombre("nroTarjeta");
+                int nro_actual;
+                Int32.TryParse(nro_actual_str, out nro_actual);
+                if (nro_actual == funcionario.NroTarjeta)
                 {
                     encontradas.Add(m);
                 }

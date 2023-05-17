@@ -6,23 +6,29 @@ namespace ConversorMarcas.Modelo.Entidades
         string nombre;
         int posicion;
         int cantDigitos;
+        bool esHeader;
         string valor;
 
-        public Parametro(int id,string nombre)
+        public Parametro(string nombre)
         {
-            this.id = id;
+            //Id = id;
             Nombre = nombre;
         }
-        public Parametro(string nombre, int posicion, int cantDigitos)
+        public Parametro(int id)
         {
-        //    this.id = id;
+            Id = id;
+        }
+        public Parametro(string nombre, int posicion, int cantDigitos,bool esHeader)
+        {
+            //Id = id;
             Nombre = nombre;
             Posicion = posicion;
             CantDigitos = cantDigitos;
+            EsHeader = esHeader;
         }
-        public Parametro(int id, string nombre, string valor)
+        public Parametro(string nombre, string valor)
         {
-            this.id = id;
+            //Id = id;
             Nombre = nombre;
             Valor = valor;
         }
@@ -31,5 +37,6 @@ namespace ConversorMarcas.Modelo.Entidades
         public string Nombre { get => nombre; set => nombre = value; }
         public int Posicion { get => posicion; set => posicion = value; }
         public string Valor { get => valor; set => valor = value; }
+        public bool EsHeader { get => esHeader; set => esHeader = value; }  
     }
 }

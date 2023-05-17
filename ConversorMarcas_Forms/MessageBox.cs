@@ -19,6 +19,7 @@ namespace ConversorMarcas_Forms
             else if(titulo == "OK") { label_titulo_MessageBox.ForeColor = Color.GreenYellow; }
             label_MessageBox.Text = mensaje;
             label_titulo_MessageBox.Text=titulo;
+            this.Text = titulo;
         }
 
         private void btn_OK_Click(object sender, EventArgs e)

@@ -2,21 +2,25 @@ namespace ConversorMarcas.Modelo.Entidades
 {
     public class Formato
     {
+        int id;
         string nombre;
         string extension;
         Cliente cliente;
         Seccion body = new Seccion("Body");
         Seccion header = new Seccion("Header");
-        int ultIdParametro = 0;
         bool tieneHeader;
-        public Formato(string nombre, string ext, Cliente cliente, bool tieneHeader)
+        int ultIdParam = 0;
+        List<int> ids_param_sin_usar = new List<int>();
+
+        public Formato(string nombre, string extension, Cliente cliente, bool tieneHeader)
         {
-            Nombre = nombre;
+            this.nombre = nombre;
+            if (!extension.StartsWith(".")) { extension = "." + extension; }
+            this.extension = extension;
             this.cliente = cliente;
             this.tieneHeader = tieneHeader;
-            if (!ext.StartsWith(".")) { ext = "." + ext; }
-            extension = ext;
         }
+        public int Id { get => id; set => id = value; }
         public string Nombre { get => nombre; set => nombre = value; }
         public Cliente GetCliente() { return cliente; }
         public string GetExtension() { return extension; }
@@ -31,25 +35,26 @@ namespace ConversorMarcas.Modelo.Entidades
 
         public bool AgregarParametro(string nombre, int posInicial, int cantDigitos, bool esHeader)
         {
-            Parametro nuevo = new Parametro(nombre, posInicial, cantDigitos);
-            //nuevo.SetId(++ultIdParametro);
+            Parametro nuevo = new Parametro(nombre, posInicial, cantDigitos, esHeader);
+            if (ids_param_sin_usar.Count() != 0)
+            {
+                nuevo.Id = ids_param_sin_usar[0];
+                ids_param_sin_usar.Remove(ids_param_sin_usar[0]);
+            }
+            else
+            {
+                ultIdParam++;
+                nuevo.Id = ultIdParam;
+            }
+
             if (esHeader)
             {
-                if (GetHeader().AgregarParametro(nuevo)) 
-                {
-                    nuevo.Id = ++ultIdParametro;
-                    return true;
-                } 
+                return GetHeader().AgregarParametro(nuevo);
             }
             else 
             {
-                if (GetBody().AgregarParametro(nuevo))
-                {
-                    nuevo.Id = ++ultIdParametro;
-                    return true;
-                }
+                return GetBody().AgregarParametro(nuevo);
             }
-            return false;
         }
         public bool QuitarParametro(Parametro aBorrar)
         {
@@ -80,21 +85,52 @@ namespace ConversorMarcas.Modelo.Entidades
             return paramOut;
         }
         public int GetCantParametros() { return body.GetCantParametros() + header.GetCantParametros(); }
-        public bool TieneParametroXNombre(Parametro buscado)
+        public Parametro ParamXNombre(string nombre)
         {
-            if (body.ParametroXNombre(buscado.Nombre) != null) return true;
-            else
+            if (body.ParamXNombre(nombre) != null) return body.ParamXNombre(nombre);
+            if (TieneHeader) { if (header.ParamXNombre(nombre) != null) return header.ParamXNombre(nombre); }
+
+            return null;
+            
+        }
+        public Parametro ParamXId(int id)
+        {
+            Parametro p = this.body.ParamXId(id);
+            if (p != null) return p;
+            return this.header.ParamXId(id);
+        }
+        public Formato Editar(Parametro[] parametrosAEditar) 
+        {
+            foreach (Parametro pEdit in parametrosAEditar)
             {
-                if (TieneHeader) { return header.ParametroXNombre(buscado.Nombre) != null; }
-                return false;
+                if (pEdit != null)
+                {
+                    ParamXId(pEdit.Id).Posicion = pEdit.Posicion;
+                    ParamXId(pEdit.Id).CantDigitos = pEdit.CantDigitos;
+                }
             }
+            return this;
+        }
+        public bool EditarParametros(Parametro[] parametrosAEditar) 
+        {
+            foreach (Parametro pEdit in parametrosAEditar) 
+            {
+                if (pEdit != null) 
+                {
+                    Parametro p = ParamXId(pEdit.Id);
+                    if (p == null) return false;
+                    p = pEdit;
+                    p.Posicion = pEdit.Posicion;
+                    p.CantDigitos= pEdit.CantDigitos;
+                }
+            }
+            return true;
         }
         public bool Validar()
         {
             if(nombre.Trim()=="") return false;
             if(cliente == null) return false ;
             return true;
-
         }
     }
 }

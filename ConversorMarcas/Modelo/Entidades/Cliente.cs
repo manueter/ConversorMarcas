@@ -40,10 +40,19 @@ namespace ConversorMarcas.Modelo.Entidades
             }
             return null;
         }
+        public bool EditarFormato(Formato formato) 
+        {
+            Formato f = GetFormatoXNombre(formato.Nombre);
+            if (f == null) return false;
+            f = formato;
+            return true;
+            //Verificar comportamiento.
+
+        }
 
         public bool AgregarMarcas(List<Marca> marcasNuevas) 
         {
-            if (marcasNuevas == null) return false;
+            if (marcasNuevas.Count==0) return false;
             marcas.AddRange(marcasNuevas); return true;
         }
         public void VaciarFormatos()

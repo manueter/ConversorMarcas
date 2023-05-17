@@ -58,11 +58,13 @@ namespace ConversorMarcas.Controles
             List<Marca> marcasObtenidas = new List<Marca>();
             Linea linea;
 
-            sr = new StreamReader(file.Name);
-            lineastr = sr.ReadLine().Trim();
+            sr = new StreamReader(file.FullName);
+            lineastr = sr.ReadLine();
+   
             int numLinea = 0;
             while (lineastr != null)
             {
+                lineastr.Trim();
                 //Hay que validar la linea
                 numLinea++;
                 linea = new Linea(numLinea, lineastr, formato, file.FullName);
@@ -75,11 +77,29 @@ namespace ConversorMarcas.Controles
             
             return marcasObtenidas;
         }
-        
+
+        public static string LineasToString(List<Linea> lineas)
+        {
+            string strout = "";
+            if (lineas == null) return strout;
+            foreach (Linea l in lineas)
+            {
+                strout += l.Valor;
+                strout += Environment.NewLine;
+            }
+            return strout;
+        }
+
+        public static FileInfo GenerarArchivoDeSalida(string outFolder, string nombre, string extension, List<Linea> lineas) 
+        {
+            string datosString = LineasToString(lineas);
+            return GenerarArchivoDeSalida(outFolder, nombre, extension, datosString);
+        }
+
         public static FileInfo GenerarArchivoDeSalida(string outFolder, string nombre, string extension, string datosString)
         {
             if (extension != null)
-            {
+            {   
                 extension = extension.Trim();
                 if (!extension.Substring(0, 1).Equals(".")) { extension = "." + extension; }
                 try

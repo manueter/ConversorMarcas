@@ -24,7 +24,7 @@ namespace ConversorMarcas.Modelo.Entidades
             this.valorLinea = valorLinea;
             this.formato = formato;            
             this.archivoOrigen = archivoOrigen;
-            ObtenerMarcas();
+            //ObtenerMarcas();
         }
 
         public string Valor { get => valorLinea; set => valorLinea = value; }
@@ -32,60 +32,51 @@ namespace ConversorMarcas.Modelo.Entidades
         public string GetArchivoOrigen() { return archivoOrigen; }
         public int GetNumLinea() { return numLinea; }
 
-        public bool ExisteParametroXNombre(Parametro parametro)
+        public Parametro ParametroXNombre(string nombre)
         {
-            return formato.TieneParametroXNombre(parametro);
+            return formato.ParamXNombre(nombre);
         }
         public List<Marca> ObtenerMarcas()
         {
             List<Marca> marcasObtenidas = new List<Marca>();
-            List<Parametro> paramsHeaderMarca = new();
-
+            List<Parametro> parametrosHeader = new List<Parametro>();
+            int idParamMarca=0;
 
             string valorDelParamActual;
             if (formato.TieneHeader)
             {
-
                 foreach (Parametro p in formato.GetHeader().GetParametros())
                 {
                     // Conseguir un estandar
-
+                    idParamMarca++;
                     valorDelParamActual = valorLinea.Substring(p.Posicion - 1, p.CantDigitos);
                     p.Valor = valorDelParamActual;
-                    Parametro paramHeaderNuevo = new Parametro(0, p.Nombre, p.Valor);
-                    paramsHeaderMarca.Add(paramHeaderNuevo);
+                    Parametro nuevoParamHeader = new Parametro(p.Nombre, p.Valor);
+                    parametrosHeader.Add(nuevoParamHeader);
                 }
-
             }
 
             //Hay que verificar el largo total de la linea y comparar con largo de seccion body
             int largoSeccionBody = formato.GetBody().GetLargoSeccion();
             int largoLinea = valorLinea.Length;
             int posActual = formato.GetHeader().GetLargoSeccion();        //Quitar -1
-            //int posActual = formato.GetBody().GetLargoSeccion();
+            int idActual = idParamMarca;
+
             while (posActual + largoSeccionBody <= largoLinea)
             {
-                List<Parametro> paramsMarca = new();
-                if (formato.TieneHeader) paramsMarca.AddRange(paramsHeaderMarca);
-
                 Marca nueva = new Marca(this);
-                List<Parametro> paramsBodyMarca = new();
+                if(!nueva.AgregarParametros(parametrosHeader)) return null;
+                
                 foreach (Parametro p in formato.GetBody().GetParametros())
                 {
-                    //posActual=p.Posicion+posActual -1
+                    idActual++;
                     //Corregir posicion con posicionActual
                     valorDelParamActual = valorLinea.Substring(p.Posicion + posActual - 1, p.CantDigitos);
                     p.Valor = valorDelParamActual;
-                    Parametro paramBodyNuevo = new Parametro(0,p.Nombre, p.Valor);
-                    paramsBodyMarca.Add(paramBodyNuevo);
+                    if(!nueva.AgregarParametro(new Parametro(p.Nombre, p.Valor))) return null;
                 }
-                paramsMarca.AddRange(paramsBodyMarca);
-                if (nueva.AgregarParametros(paramsMarca)) marcasObtenidas.Add(nueva);
-                else
-                {
-                    //Realizar un aviso si no se agrega la marca actual.. pero el recorrido sigue.
-                    //Considerar que la linea ya fue validada.
-                }
+                marcasObtenidas.Add(nueva);
+                idActual = idParamMarca;
                 posActual += largoSeccionBody;
             }
             return marcasObtenidas;

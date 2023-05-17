@@ -369,7 +369,6 @@
             this.tableLayoutPanel_main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel_main.AutoSize = true;
             this.tableLayoutPanel_main.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel_main.ColumnCount = 2;
             this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -388,7 +387,7 @@
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 427);
+            this.tableLayoutPanel_main.Size = new System.Drawing.Size(942, 455);
             this.tableLayoutPanel_main.TabIndex = 16;
             // 
             // btn_ConvertirMarcas
@@ -409,7 +408,7 @@
             this.btn_ConvertirMarcas.ForeColor = System.Drawing.Color.IndianRed;
             this.btn_ConvertirMarcas.Location = new System.Drawing.Point(3, 410);
             this.btn_ConvertirMarcas.Name = "btn_ConvertirMarcas";
-            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 14);
+            this.btn_ConvertirMarcas.Size = new System.Drawing.Size(465, 42);
             this.btn_ConvertirMarcas.TabIndex = 0;
             this.btn_ConvertirMarcas.Text = "Convertir Marcas";
             this.btn_ConvertirMarcas.UseVisualStyleBackColor = false;
@@ -635,7 +634,6 @@
             this.tableFiltros.ResumeLayout(false);
             this.tableFiltros.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

@@ -7,9 +7,14 @@ namespace ConversorMarcas.Datos.Listas
     {
         private static RepoFormatos instancia = new RepoFormatos();
         private List<Formato> formatos = new();
+        //private List<Formato> formatos_edit = new();
         public static RepoFormatos GetInstancia() { return instancia; }
         private RepoFormatos() { }
 
+        private List<int> ids_sin_usar = new ();
+        int ultId=0;
+
+        
         public bool Alta(Formato nuevo)
         {
             if (!nuevo.Validar()) { return false; }
@@ -21,6 +26,8 @@ namespace ConversorMarcas.Datos.Listas
         {
             if (aBorrar == null) return false;
             if(formatos.Count()==0) return false;
+
+            ids_sin_usar.Add(aBorrar.Id);
             return formatos.Remove(aBorrar);
         }
         public List<Formato> TraerTodo()
@@ -40,7 +47,7 @@ namespace ConversorMarcas.Datos.Listas
         }
         public Formato BuscarXId(int id) 
         {
-            /*
+            
             foreach (Formato f in formatos)
             {
                 if (f.Id == id)
@@ -48,9 +55,16 @@ namespace ConversorMarcas.Datos.Listas
                     return f;
                 }
             }
-            */
             return null;
         }
+        public bool EditarFormato(Formato editando, Parametro[] parametrosAEditar) 
+        {
+            Formato f = editando.Editar(parametrosAEditar);
+            return true;
+            //if (!editado.EditarParametros(parametrosAEditar)) return false;
+            //return editando.GetCliente().EditarFormato(editado);
+        }
+
         public Formato GetFormatoXExtension(string extension)
         {
             if (extension == null) return null;

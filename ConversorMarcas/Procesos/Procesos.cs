@@ -38,9 +38,7 @@ namespace ConversorMarcas.Procesos
             List<Linea> lineasTransformadas = RepoMarcas.GetInstancia().GetLineasXFormato(marcasATransformar,formatoOut);
             if (lineasTransformadas == null) { return "No se pudieron convertir las marcas al formato solicitado."; }
             if (lineasTransformadas.Count == 0) { return "No se convirtio ninguna marca."; }
-            string stringSalida = ControlLineas.LineasToString(lineasTransformadas);
-            if (stringSalida == null) { return "Se obtuvo una salida vacia."; }
-            ControlArchivos.GenerarArchivoDeSalida(folderOut, nameFileOut, formatoOut.GetExtension(), stringSalida);
+            ControlArchivos.GenerarArchivoDeSalida(folderOut, nameFileOut, formatoOut.GetExtension(), lineasTransformadas);
             return "OK";
         }
 

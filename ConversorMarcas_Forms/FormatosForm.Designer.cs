@@ -115,7 +115,7 @@
             this.comboBox_formatos.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.comboBox_formatos.Font = new System.Drawing.Font("Ubuntu Mono", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.comboBox_formatos.FormattingEnabled = true;
-            this.comboBox_formatos.Location = new System.Drawing.Point(274, 20);
+            this.comboBox_formatos.Location = new System.Drawing.Point(267, 20);
             this.comboBox_formatos.Name = "comboBox_formatos";
             this.comboBox_formatos.Size = new System.Drawing.Size(146, 37);
             this.comboBox_formatos.TabIndex = 1;
@@ -134,7 +134,7 @@
             // btn_Confirmar
             // 
             this.btn_Confirmar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Confirmar.Location = new System.Drawing.Point(291, 203);
+            this.btn_Confirmar.Location = new System.Drawing.Point(277, 168);
             this.btn_Confirmar.Name = "btn_Confirmar";
             this.btn_Confirmar.Size = new System.Drawing.Size(129, 44);
             this.btn_Confirmar.TabIndex = 3;
@@ -146,8 +146,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.RoyalBlue;
-            this.ClientSize = new System.Drawing.Size(440, 263);
+            this.ClientSize = new System.Drawing.Size(426, 224);
             this.Controls.Add(this.btn_Confirmar);
             this.Controls.Add(this.lbl_cliente);
             this.Controls.Add(this.comboBox_formatos);
